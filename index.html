@@ -4,3477 +4,721 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090914">
-<title>MATRIX: DIGITAL LIFE</title>
+<title>VICE CITY | THE COLLECTION</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg: #090914;
-  --panel: #141426;
-  --panel2: #1c1b35;
-  --purple: #a879ff;
-  --blue: #62c8ff;
-  --pink: #ff78c8;
-  --text: #f1edff;
-  --muted: #aaa5c2;
-  --line: rgba(183,155,255,.2);
-  --green: #83edbd;
-  --gold: #ffd27b;
-  --danger: #ff7c91;
-  --radius: 16px;
-  --shadow: 0 15px 50px rgba(0,0,0,.38);
-}
-
 * {
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html, body {
-  margin: 0;
-  min-height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+:root {
+    --pink: #ff3185;
+    --orange: #ff7545;
+    --dark: #09090d;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 15% 0%, rgba(112,65,180,.17), transparent 42%),
-    radial-gradient(ellipse at 100% 80%, rgba(49,119,190,.12), transparent 40%),
-    var(--bg);
-}
-
-button {
-  font: inherit;
-  cursor: pointer;
-  color: inherit;
-}
-
-button:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 3px;
-}
-
-#game {
-  width: min(1200px, 100%);
-  min-height: 100vh;
-  margin: auto;
-  padding: 14px;
-}
-
-/* HEADER */
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 15px 18px;
-  background: rgba(20,20,38,.88);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(15px);
-}
-
-.logo {
-  font-size: 19px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: var(--purple);
-}
-
-.logo span {
-  color: var(--blue);
-}
-
-.tagline {
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 2px;
-  margin-top: 4px;
-}
-
-.player-stats {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.stat strong {
-  display: block;
-  color: var(--text);
-  font-size: 14px;
-  margin-top: 3px;
-}
-
-/* GAME LAYOUT */
-
-.game-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
-  gap: 14px;
-  margin-top: 14px;
-}
-
-.main-area {
-  min-width: 0;
-}
-
-.scene-frame {
-  position: relative;
-  height: 490px;
-  overflow: hidden;
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background: #171329;
-  box-shadow: var(--shadow);
-}
-
-#scene {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(8,8,20,.08), rgba(8,8,20,.72)),
-    url("assets/scenes/apartment.jpg") center / cover no-repeat,
-    radial-gradient(circle at 50% 35%, #40305f, #10101d 75%);
-  transition: background-image .5s ease;
-}
-
-#scene::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    0deg,
-    rgba(7,7,18,.72),
-    transparent 45%,
-    rgba(7,7,18,.08)
-  );
-}
-
-.scene-topbar {
-  position: absolute;
-  z-index: 2;
-  top: 15px;
-  left: 16px;
-  right: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.location-label {
-  padding: 8px 12px;
-  background: rgba(8,8,20,.7);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  font-size: 11px;
-  letter-spacing: 1px;
-  backdrop-filter: blur(8px);
-}
-
-.period-label {
-  font-size: 11px;
-  color: #e4d8ff;
-  background: rgba(8,8,20,.7);
-  padding: 8px 12px;
-  border-radius: 20px;
-}
-
-/* CHARACTER */
-
-.character-stage {
-  position: absolute;
-  z-index: 2;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(60%, 340px);
-  height: 88%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  pointer-events: none;
-}
-
-#character {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  object-position: bottom;
-  filter: drop-shadow(0 10px 25px rgba(0,0,0,.55));
-  display: none;
-}
-
-#character-placeholder {
-  display: none;
-  font-size: 90px;
-  padding-bottom: 35px;
-  filter: drop-shadow(0 5px 25px rgba(167,121,255,.35));
-}
-
-.scene-hint {
-  position: absolute;
-  z-index: 3;
-  bottom: 16px;
-  left: 16px;
-  font-size: 11px;
-  color: #d5c8f4;
-  opacity: .8;
-}
-
-/* SIDE PANEL */
-
-.side-panel {
-  background: rgba(20,20,38,.92);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 15px;
-  min-width: 0;
-}
-
-.section-title {
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: var(--muted);
-  margin: 2px 0 13px;
-}
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  background: var(--panel2);
-  border-radius: 12px;
-  margin-bottom: 9px;
-  border: 1px solid transparent;
-  transition: .2s;
-}
-
-.profile-card:hover {
-  border-color: var(--purple);
-  transform: translateY(-2px);
-}
-
-.profile-avatar {
-  width: 43px;
-  height: 43px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 21px;
-  background: linear-gradient(135deg, #61468e, #263d70);
-  flex-shrink: 0;
-}
-
-.profile-name {
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.profile-description {
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 4px;
-}
-
-.profile-heart {
-  margin-left: auto;
-  color: var(--pink);
-}
-
-/* DIALOGUE */
-
-.dialogue-box {
-  position: relative;
-  background: linear-gradient(135deg, #17162d, #111321);
-  border: 1px solid rgba(168,121,255,.35);
-  border-radius: 16px;
-  padding: 17px;
-  margin-top: 14px;
-  min-height: 155px;
-  box-shadow: var(--shadow);
-}
-
-.speaker-name {
-  color: var(--purple);
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-
-#message {
-  font-size: 14px;
-  line-height: 1.75;
-  color: #e9e5f8;
-  min-height: 50px;
-  white-space: pre-wrap;
-}
-
-.dialogue-next {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-#choices {
-  display: grid;
-  gap: 8px;
-  margin-top: 13px;
-}
-
-.choice-button {
-  text-align: left;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 11px;
-  background: rgba(168,121,255,.07);
-  color: var(--text);
-  font-size: 13px;
-  transition: .2s;
-}
-
-.choice-button:hover {
-  background: rgba(168,121,255,.2);
-  border-color: var(--purple);
-  transform: translateX(3px);
-}
-
-.primary-button {
-  border: 0;
-  padding: 10px 17px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #8b5cf6, #5a8cff);
-  color: white;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .5px;
-  box-shadow: 0 5px 18px rgba(115,92,246,.25);
-}
-
-.primary-button:hover {
-  filter: brightness(1.15);
-  transform: translateY(-1px);
-}
-
-.secondary-button {
-  padding: 10px 15px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--panel2);
-  color: var(--text);
-  font-size: 12px;
+    background: var(--dark);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
 
 /* NAVIGATION */
 
-.navigation {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px 0;
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 22px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
+    backdrop-filter: blur(5px);
 }
 
-.nav-button {
-  flex: 1;
-  min-width: 75px;
-  border: 1px solid var(--line);
-  background: rgba(20,20,38,.92);
-  color: var(--muted);
-  padding: 12px 8px;
-  border-radius: 11px;
-  font-size: 11px;
-  font-weight: 700;
-  transition: .2s;
+.logo {
+    font-family: 'Anton', sans-serif;
+    font-size: 27px;
+    letter-spacing: 3px;
+    color: var(--pink);
 }
 
-.nav-button:hover,
-.nav-button.active {
-  color: white;
-  border-color: var(--purple);
-  background: rgba(168,121,255,.17);
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    transition: .3s;
 }
 
-/* GENERAL PANELS */
-
-.game-panel {
-  display: none;
-  margin-top: 12px;
-  padding: 18px;
-  background: rgba(20,20,38,.97);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+nav a:hover {
+    color: var(--pink);
 }
 
-.game-panel.active {
-  display: block;
-  animation: panelIn .25s ease;
+/* HERO */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 8% 70px;
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(90deg, rgba(5,5,10,.95), rgba(5,5,10,.5), rgba(5,5,10,.15)),
+      linear-gradient(0deg, var(--dark), transparent 45%),
+      url('1000008504.jpg') center/cover no-repeat;
 }
 
-.panel-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,49,133,.12), transparent 50%);
+    pointer-events: none;
 }
 
-.panel-heading h2 {
-  font-size: 17px;
-  margin: 0;
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
 }
 
-.close-button {
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  font-size: 21px;
+.hero-tag {
+    color: var(--pink);
+    letter-spacing: 7px;
+    font-size: 12px;
+    font-weight: 900;
+    margin-bottom: 25px;
 }
 
-.panel-content {
-  color: #e5e0f3;
-  font-size: 13px;
-  line-height: 1.7;
+.hero h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(75px, 14vw, 175px);
+    line-height: .85;
+    letter-spacing: -3px;
+    text-transform: uppercase;
 }
 
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
+.hero h1 span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 2px white;
 }
 
-.world-card {
-  background: var(--panel2);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 13px;
+.hero p {
+    margin-top: 30px;
+    max-width: 460px;
+    color: #ccc;
+    line-height: 1.9;
+    font-size: 14px;
 }
 
-.world-card h3 {
-  margin: 0 0 6px;
-  font-size: 14px;
+.hero-btn {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 17px 35px;
+    background: linear-gradient(100deg, var(--pink), var(--orange));
+    color: white;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-decoration: none;
+    font-size: 11px;
+    transition: .3s;
 }
 
-.world-card p {
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.6;
+.hero-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 35px rgba(255,49,133,.4);
 }
 
-.world-card button {
-  width: 100%;
-  margin-top: 7px;
+/* INTRO */
+
+.intro {
+    padding: 90px 8% 50px;
 }
 
-.notice {
-  position: fixed;
-  z-index: 100;
-  left: 50%;
-  bottom: 25px;
-  transform: translateX(-50%);
-  padding: 12px 18px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #211b37;
-  color: white;
-  box-shadow: var(--shadow);
-  font-size: 12px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s;
+.eyebrow {
+    color: var(--pink);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    margin-bottom: 15px;
 }
 
-.notice.show {
-  opacity: 1;
+.section-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(42px, 7vw, 85px);
+    line-height: 1;
+    text-transform: uppercase;
 }
 
-/* ROMANCE AND RELATIONSHIP ELEMENTS */
-
-.heart {
-  color: var(--pink);
+.section-title span {
+    color: var(--orange);
 }
 
-.relationship-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px;
-  margin: 10px 0;
-  border-radius: 13px;
-  background: linear-gradient(120deg, #241b3b, #15192c);
-  border: 1px solid rgba(255,120,200,.2);
+.intro p {
+    margin-top: 20px;
+    color: #999;
+    font-size: 13px;
+    line-height: 1.9;
+    max-width: 600px;
 }
 
-.relationship-avatar {
-  font-size: 27px;
+/* GALLERY SECTIONS */
+
+.gallery-section {
+    padding: 55px 0 65px;
 }
 
-.relationship-info {
-  flex: 1;
+.gallery-heading {
+    padding: 0 8%;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
 }
 
-.relationship-name {
-  font-weight: 800;
-  font-size: 13px;
+.gallery-heading h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(32px, 5vw, 55px);
+    text-transform: uppercase;
 }
 
-.relationship-level {
-  font-size: 10px;
-  color: var(--pink);
-  margin-top: 4px;
+.gallery-heading p {
+    color: #888;
+    font-size: 10px;
+    letter-spacing: 3px;
 }
 
-.relationship-bar {
-  height: 5px;
-  background: #302a43;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 8px;
+.gallery {
+    display: flex;
+    overflow-x: auto;
+    gap: 18px;
+    padding: 15px 8% 35px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--pink) #17171d;
 }
 
-.relationship-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--purple), var(--pink));
-  border-radius: 10px;
+.gallery::-webkit-scrollbar {
+    height: 5px;
 }
 
-/* CINEMATIC OVERLAY */
-
-#cinematic-layer {
-  display: none;
-  position: fixed;
-  z-index: 200;
-  inset: 0;
-  background: #080812;
+.gallery::-webkit-scrollbar-thumb {
+    background: var(--pink);
+    border-radius: 20px;
 }
 
-#cinematic-layer.active {
-  display: block;
+.photo {
+    flex: 0 0 390px;
+    height: 490px;
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: center;
+    cursor: pointer;
+    background: #17171d;
+    border: 1px solid #26232c;
+    transition: .4s;
 }
 
-.cinematic-background {
-  position: absolute;
-  inset: 0;
-  background-position: center;
-  background-size: cover;
-  opacity: .8;
+.photo:hover {
+    transform: translateY(-10px);
+    border-color: var(--pink);
 }
 
-.cinematic-shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    0deg,
-    rgba(5,5,15,.98),
-    rgba(5,5,15,.1) 75%
-  );
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s;
 }
 
-.cinematic-character {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 76%;
-  max-width: 90%;
-  object-fit: contain;
+.photo:hover img {
+    transform: scale(1.09);
 }
 
-.cinematic-dialogue {
-  position: absolute;
-  left: 5%;
-  right: 5%;
-  bottom: 25px;
-  max-width: 850px;
-  margin: auto;
-  padding: 22px;
-  background: rgba(17,16,33,.95);
-  border: 1px solid var(--line);
-  border-radius: 15px;
+.photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 45%, rgba(0,0,0,.85));
+    pointer-events: none;
 }
 
-.cinematic-speaker {
-  color: var(--pink);
-  font-size: 13px;
-  font-weight: 800;
-  margin-bottom: 10px;
+.photo-info {
+    position: absolute;
+    z-index: 2;
+    bottom: 25px;
+    left: 25px;
+    right: 20px;
 }
 
-#cinematic-message {
-  font-size: 15px;
-  line-height: 1.8;
-  min-height: 55px;
+.photo-info small {
+    color: var(--pink);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 3px;
 }
 
-#cinematic-choices {
-  display: grid;
-  gap: 8px;
-  margin-top: 15px;
+.photo-info h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin-top: 7px;
 }
 
-.cinematic-top {
-  position: absolute;
-  top: 18px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: white;
+/* FEATURED IMAGE */
+
+.featured {
+    padding: 75px 8%;
 }
 
-/* LOADING / START SCREEN */
-
-#start-screen {
-  position: fixed;
-  z-index: 300;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 22px;
-  text-align: center;
-  background:
-    linear-gradient(rgba(8,8,20,.55), rgba(8,8,20,.94)),
-    url("assets/scenes/city-night.jpg") center / cover no-repeat,
-    #090914;
+.featured-image {
+    width: 100%;
+    height: min(75vh, 750px);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.start-content {
-  max-width: 650px;
+.featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .8s;
 }
 
-.start-kicker {
-  color: var(--blue);
-  font-size: 11px;
-  letter-spacing: 5px;
+.featured-image:hover img {
+    transform: scale(1.04);
 }
 
-.start-title {
-  font-size: clamp(36px, 8vw, 72px);
-  font-weight: 950;
-  letter-spacing: 4px;
-  margin: 20px 0 10px;
-  line-height: 1;
-  background: linear-gradient(90deg, #c69aff, #70d5ff, #ff91d0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
+.featured-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,.8), transparent 65%);
+    pointer-events: none;
 }
 
-.start-subtitle {
-  color: #c5bddc;
-  font-size: 13px;
-  letter-spacing: 3px;
-  margin-bottom: 32px;
+.featured-text {
+    position: absolute;
+    z-index: 2;
+    bottom: 45px;
+    left: 45px;
 }
 
-.start-description {
-  color: #ded8ee;
-  font-size: 14px;
-  line-height: 1.8;
-  margin: 0 auto 28px;
-  max-width: 480px;
+.featured-text h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(45px, 8vw, 100px);
+    text-transform: uppercase;
 }
 
-.start-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+/* IMAGE LIGHTBOX */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0,0,0,.96);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
 }
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 95%;
+    max-height: 85vh;
+    object-fit: contain;
+    box-shadow: 0 0 50px rgba(255,49,133,.15);
+}
+
+.close {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.close:hover {
+    color: var(--pink);
+}
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,49,133,.8);
+    color: white;
+    border: 0;
+    font-size: 27px;
+    padding: 12px 20px;
+    cursor: pointer;
+}
+
+.prev { left: 15px; }
+.next { right: 15px; }
 
 /* FOOTER */
 
-.footer {
-  text-align: center;
-  padding: 20px 10px;
-  color: #77728e;
-  font-size: 10px;
-  letter-spacing: 2px;
-}
-
-/* ANIMATIONS */
-
-@keyframes panelIn {
-  from { opacity: 0; transform: translateY(7px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-  0%,100% { opacity: .6; }
-  50% { opacity: 1; }
-}
-
-@media (max-width: 760px) {
-  #game { padding: 9px; }
-
-  .game-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .scene-frame {
-    height: 380px;
-  }
-
-  .side-panel {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 7px;
-  }
-
-  .side-panel .section-title {
-    grid-column: 1 / -1;
-    margin-bottom: 3px;
-  }
-
-  .profile-card {
-    padding: 8px;
-    margin: 0;
-    flex-direction: column;
+footer {
     text-align: center;
-  }
-
-  .profile-heart {
-    display: none;
-  }
-
-  .player-stats {
-    gap: 8px;
-    font-size: 10px;
-  }
-
-  .logo {
-    font-size: 15px;
-  }
-
-  .tagline {
-    font-size: 8px;
-  }
-
-  .nav-button {
-    min-width: 65px;
-    font-size: 10px;
-    padding: 11px 5px;
-  }
+    padding: 80px 20px;
+    background: #050508;
+    border-top: 1px solid #25202a;
 }
 
-@media (max-width: 420px) {
-  .scene-frame { height: 320px; }
-  .header { padding: 12px; }
-  .player-stats { max-width: 130px; }
-  .dialogue-box { padding: 13px; }
-  #message { font-size: 13px; }
+footer h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 55px;
+    color: var(--pink);
+    letter-spacing: 4px;
+}
+
+footer p {
+    color: #777;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-top: 15px;
+}
+
+footer .copyright {
+    margin-top: 40px;
+    color: #444;
+    font-size: 10px;
+}
+
+/* ANIMATION */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: .8s ease;
+}
+
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MOBILE */
+
+@media(max-width: 650px) {
+    nav {
+        padding: 18px 5%;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    nav a {
+        font-size: 9px;
+        margin-left: 10px;
+    }
+
+    .hero {
+        min-height: 90vh;
+        padding-left: 7%;
+    }
+
+    .photo {
+        flex-basis: 82vw;
+        height: 420px;
+    }
+
+    .gallery-heading {
+        padding: 0 6%;
+    }
+
+    .gallery {
+        padding-left: 6%;
+    }
+
+    .featured {
+        padding: 45px 6%;
+    }
+
+    .featured-image {
+        height: 420px;
+    }
+
+    .featured-text {
+        left: 20px;
+        bottom: 25px;
+    }
+
+    .lightbox-arrow {
+        font-size: 18px;
+        padding: 10px 13px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- START SCREEN -->
-
-<div id="start-screen">
-  <div class="start-content">
-    <div class="start-kicker">A DIGITAL STORY EXPERIENCE</div>
-    <h1 class="start-title">MATRIX</h1>
-    <div class="start-subtitle">DIGITAL LIFE</div>
-
-    <p class="start-description">
-      A mysterious city. Three unexpected connections.
-      Countless choices. Discover hidden secrets, build
-      relationships, and decide where your heart belongs.
-    </p>
-
-    <div class="start-actions">
-      <button class="primary-button" id="start-game-button">
-        START NEW LIFE
-      </button>
-      <button class="secondary-button" id="continue-game-button">
-        CONTINUE
-      </button>
-    </div>
-  </div>
-</div>
-
-<div id="game">
-
-  <!-- HEADER -->
-
-  <header class="header">
+<nav>
+    <div class="logo">VICE CITY®</div>
     <div>
-      <div class="logo">MATRIX<span>: DIGITAL LIFE</span></div>
-      <div class="tagline">A STORY. A CITY. A THOUSAND POSSIBILITIES.</div>
+        <a href="#home">HOME</a>
+        <a href="#gallery">GALLERY</a>
+        <a href="#featured">FEATURED</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div class="hero-tag">WELCOME TO THE COLLECTION</div>
+        <h1>
+            THE<br>
+            <span>VICE</span>
+            CITY
+        </h1>
+        <p>
+            A world of unforgettable moments.
+            Explore the collection through a cinematic
+            experience inspired by the neon nights,
+            luxury lifestyle and atmosphere of Vice City.
+        </p>
+        <a href="#gallery" class="hero-btn">EXPLORE THE WORLD ↗</a>
+    </div>
+</section>
+
+<!-- INTRO -->
+
+<section class="intro reveal" id="gallery">
+    <div class="eyebrow">01 — THE COLLECTION</div>
+    <h2 class="section-title">BEYOND THE <span>ORDINARY.</span></h2>
+    <p>
+        Every frame tells a story. Scroll through the
+        collection and discover every moment in full detail.
+    </p>
+</section>
+
+<!-- MAIN GALLERY -->
+
+<section class="gallery-section">
+    <div class="gallery-heading">
+        <div>
+            <div class="eyebrow">THE PHOTO ARCHIVE</div>
+            <h2>VISUAL STORIES.</h2>
+        </div>
+        <p>DRAG TO EXPLORE →</p>
     </div>
 
-    <div class="player-stats">
-      <div class="stat">
-        MONEY
-        <strong id="money">$150</strong>
-      </div>
-      <div class="stat">
-        DAY
-        <strong id="day">1</strong>
-      </div>
-      <div class="stat">
-        TIME
-        <strong id="time">08:00</strong>
-      </div>
+    <div class="gallery" id="gallery1"></div>
+</section>
+
+<!-- FEATURED -->
+
+<section class="featured reveal" id="featured">
+    <div class="eyebrow">02 — SELECTED MOMENT</div>
+    <div class="featured-image" onclick="openImage(15)">
+        <img src="1000008444.jpg" alt="Featured photograph">
+        <div class="featured-text">
+            <div class="eyebrow">THE ART OF THE MOMENT</div>
+            <h2>PURE CINEMA.</h2>
+        </div>
     </div>
-  </header>
+</section>
 
-  <!-- MAIN GAME -->
+<!-- SECOND GALLERY -->
 
-  <div class="game-layout">
-
-    <main class="main-area">
-
-      <!-- LOCATION SCENE -->
-
-      <section class="scene-frame">
-        <div id="scene"></div>
-
-        <div class="scene-topbar">
-          <div class="location-label" id="location">
-            YOUR APARTMENT
-          </div>
-          <div class="period-label" id="period">
-            MORNING
-          </div>
-        </div>
-
-        <div class="character-stage">
-          <img id="character" alt="Current character">
-          <div id="character-placeholder">✦</div>
-        </div>
-
-        <div class="scene-hint" id="scene-hint">
-          Explore the city and discover what awaits.
-        </div>
-
-        <!-- Part 2 will insert clickable hotspots here -->
-        <div id="hotspot-layer"></div>
-      </section>
-
-      <!-- DIALOGUE -->
-
-      <section class="dialogue-box">
-        <div class="speaker-name" id="speaker">
-          SYSTEM
-        </div>
-
-        <div id="message">
-          Your new life is waiting. Every choice matters.
-        </div>
-
-        <div id="choices"></div>
-
-        <div class="dialogue-next">
-          <button class="primary-button" id="next-dialogue-button">
-            CONTINUE →
-          </button>
-        </div>
-      </section>
-
-      <!-- NAVIGATION -->
-
-      <nav class="navigation">
-        <button class="nav-button active" data-screen="HOME">HOME</button>
-        <button class="nav-button" data-screen="CITY">CITY</button>
-        <button class="nav-button" data-screen="PEOPLE">PEOPLE</button>
-        <button class="nav-button" data-screen="QUESTS">QUESTS</button>
-        <button class="nav-button" data-screen="INVENTORY">BAG</button>
-        <button class="nav-button" data-screen="BONDS">BONDS</button>
-        <button class="nav-button" data-screen="SAVE">SAVE</button>
-        <button class="nav-button" data-screen="SOUND">SOUND</button>
-      </nav>
-
-      <!-- GENERAL PANEL -->
-
-      <section class="game-panel" id="panel">
-        <div class="panel-heading">
-          <h2 id="panel-title">GAME MENU</h2>
-          <button class="close-button" id="close-panel-button">×</button>
-        </div>
-        <div class="panel-content" id="panel-content"></div>
-      </section>
-
-    </main>
-
-    <!-- CHARACTER SIDEBAR -->
-
-    <aside class="side-panel">
-      <div class="section-title">YOUR CONNECTIONS</div>
-
-      <div class="profile-card" data-person="Maya">
-        <div class="profile-avatar">🌙</div>
+<section class="gallery-section">
+    <div class="gallery-heading">
         <div>
-          <div class="profile-name">Maya</div>
-          <div class="profile-description">The mysterious artist</div>
+            <div class="eyebrow">THE NEXT CHAPTER</div>
+            <h2>THE EXPERIENCE.</h2>
         </div>
-        <div class="profile-heart">♡</div>
-      </div>
+        <p>39 MOMENTS — ONE WORLD</p>
+    </div>
 
-      <div class="profile-card" data-person="Leo">
-        <div class="profile-avatar">⚡</div>
-        <div>
-          <div class="profile-name">Leo</div>
-          <div class="profile-description">The quiet technician</div>
-        </div>
-        <div class="profile-heart">♡</div>
-      </div>
+    <div class="gallery" id="gallery2"></div>
+</section>
 
-      <div class="profile-card" data-person="Aria">
-        <div class="profile-avatar">🎵</div>
-        <div>
-          <div class="profile-name">Aria</div>
-          <div class="profile-description">The independent musician</div>
-        </div>
-        <div class="profile-heart">♡</div>
-      </div>
-    </aside>
+<!-- FOOTER -->
 
-  </div>
+<footer>
+    <h2>VICE CITY</h2>
+    <p>LIVE THE MOMENT. OWN THE NIGHT.</p>
+    <div class="copyright">
+        © 2026 — PERSONAL PHOTO COLLECTION
+        <br><br>
+        FAN-MADE DESIGN • NOT AN OFFICIAL ROCKSTAR GAMES WEBSITE
+    </div>
+</footer>
 
-  <footer class="footer">
-    MATRIX DIGITAL LIFE · YOUR STORY, YOUR CHOICES
-  </footer>
+<!-- FULLSCREEN VIEWER -->
 
+<div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeImage()">×</span>
+    <button class="lightbox-arrow prev" onclick="changeImage(-1)">❮</button>
+    <img id="lightboxImg" src="" alt="Fullscreen photograph">
+    <button class="lightbox-arrow next" onclick="changeImage(1)">❯</button>
 </div>
 
-<!-- CINEMATIC STORY LAYER -->
-
-<div id="cinematic-layer">
-  <div class="cinematic-background" id="cinematic-background"></div>
-  <div class="cinematic-shade"></div>
-
-  <div class="cinematic-top">
-    <span id="cinematic-chapter">CHAPTER 01</span>
-    <span>MATRIX: DIGITAL LIFE</span>
-  </div>
-
-  <img
-    class="cinematic-character"
-    id="cinematic-character"
-    alt="Story character"
-    style="display:none"
-  >
-
-  <div class="cinematic-dialogue">
-    <div class="cinematic-speaker" id="cinematic-speaker">
-      NARRATOR
-    </div>
-
-    <div id="cinematic-message">
-      The city is waiting.
-    </div>
-
-    <div id="cinematic-choices"></div>
-
-    <div style="text-align:right;margin-top:12px">
-      <button class="primary-button" id="cinematic-next">
-        CONTINUE →
-      </button>
-      <button class="secondary-button" id="cinematic-close">
-        CLOSE
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="notice" id="notice"></div>
-
-<!-- PART 2 GOES BELOW THIS LINE -->
-
-
-<!-- ==========================================
-     MATRIX: DIGITAL LIFE
-     PART 2: CORE GAME ENGINE
-========================================== -->
-
-<style>
-/* HOTSPOTS */
-
-#hotspot-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.hotspot {
-  position: absolute;
-  pointer-events: auto;
-  transform: translate(-50%, -50%);
-  padding: 10px 13px;
-  border-radius: 12px;
-  border: 1px solid rgba(196,160,255,.65);
-  background: rgba(16,12,35,.83);
-  color: white;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .5px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 20px rgba(168,121,255,.22);
-  animation: hotspotGlow 2s infinite;
-  white-space: nowrap;
-}
-
-.hotspot:hover {
-  background: rgba(112,76,180,.95);
-  transform: translate(-50%, -50%) scale(1.07);
-}
-
-@keyframes hotspotGlow {
-  0%,100% { box-shadow: 0 0 8px rgba(168,121,255,.2); }
-  50% { box-shadow: 0 0 22px rgba(168,121,255,.65); }
-}
-
-.quest-row {
-  padding: 13px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  margin: 9px 0;
-  background: var(--panel2);
-}
-
-.quest-row strong {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.quest-row small {
-  color: var(--muted);
-}
-
-.item-pill {
-  display: inline-block;
-  padding: 7px 10px;
-  margin: 4px;
-  border-radius: 20px;
-  background: rgba(98,200,255,.12);
-  border: 1px solid rgba(98,200,255,.3);
-  font-size: 11px;
-}
-
-.city-location {
-  cursor: pointer;
-  transition: .2s;
-}
-
-.city-location:hover {
-  border-color: var(--purple);
-  transform: translateY(-2px);
-}
-
-.dialogue-note {
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 8px;
-}
-</style>
-
 <script>
-(() => {
-"use strict";
 
-/* ==========================================
-   1. MAIN GAME STATE
-========================================== */
-
-const state = window.state = {
-  playerName: "Alex",
-
-  money: 150,
-  day: 1,
-  hour: 8,
-  minute: 0,
-
-  location: "apartment",
-  inventory: ["Old Smartphone"],
-  discovered: ["apartment"],
-
-  relationships: {
-    Maya: 0,
-    Leo: 0,
-    Aria: 0
-  },
-
-  storyFlags: {},
-  quests: [],
-  completedQuests: [],
-
-  storyChapter: 1,
-  started: false,
-  currentCharacter: null,
-
-  dialogueHistory: [],
-  visited: ["apartment"],
-
-  settings: {
-    textSpeed: "normal"
-  }
-};
-
-/* ==========================================
-   2. LOCATION DATABASE
-========================================== */
-
-const locations = {
-  apartment: {
-    name: "YOUR APARTMENT",
-    image: "assets/scenes/apartment.jpg",
-    description: "Your small apartment. A new life begins here.",
-    hotspots: [
-      { id: "computer", label: "💻 COMPUTER", x: 23, y: 56 },
-      { id: "window", label: "🌃 WINDOW", x: 78, y: 35 },
-      { id: "bed", label: "🛏 BED", x: 75, y: 75 },
-      { id: "door", label: "🚪 CITY EXIT", x: 48, y: 83 }
-    ]
-  },
-
-  street: {
-    name: "NEON STREET",
-    image: "assets/scenes/street.jpg",
-    description: "A crowded street illuminated by neon lights.",
-    hotspots: [
-      { id: "cafe", label: "☕ NIGHT CAFE", x: 25, y: 65 },
-      { id: "lab", label: "🔬 LABORATORY", x: 77, y: 54 },
-      { id: "park", label: "🌳 CITY PARK", x: 50, y: 82 },
-      { id: "apartment", label: "🏠 HOME", x: 88, y: 85 }
-    ]
-  },
-
-  cafe: {
-    name: "MIDNIGHT CAFE",
-    image: "assets/scenes/cafe.jpg",
-    description: "Warm lights, quiet music, and conversations.",
-    hotspots: [
-      { id: "aria", label: "🎵 ARIA", x: 69, y: 48 },
-      { id: "leo", label: "⚡ LEO", x: 28, y: 49 },
-      { id: "coffee", label: "☕ ORDER COFFEE", x: 50, y: 78 },
-      { id: "street", label: "🚶 STREET", x: 88, y: 83 }
-    ]
-  },
-
-  lab: {
-    name: "RESEARCH LABORATORY",
-    image: "assets/scenes/laboratory.jpg",
-    description: "A strange place filled with machines and secrets.",
-    hotspots: [
-      { id: "maya", label: "🌙 MAYA", x: 69, y: 49 },
-      { id: "terminal", label: "🖥 TERMINAL", x: 27, y: 55 },
-      { id: "signal", label: "📡 SIGNAL", x: 49, y: 78 },
-      { id: "street", label: "🚶 STREET", x: 88, y: 84 }
-    ]
-  },
-
-  park: {
-    name: "CITY PARK",
-    image: "assets/scenes/park.jpg",
-    description: "A peaceful corner of the city, away from the noise.",
-    hotspots: [
-      { id: "maya", label: "🌙 MAYA", x: 68, y: 48 },
-      { id: "aria", label: "🎵 ARIA", x: 27, y: 48 },
-      { id: "bench", label: "🪑 SIT DOWN", x: 50, y: 80 },
-      { id: "street", label: "🚶 STREET", x: 88, y: 84 }
-    ]
-  }
-};
-
-/* ==========================================
-   3. CHARACTER DATABASE
-========================================== */
-
-const people = {
-  Maya: {
-    name: "Maya",
-    role: "Artist and mysterious researcher",
-    avatar: "🌙",
-    image: "assets/characters/maya.png",
-    personality: "Quiet, intelligent, thoughtful, and guarded.",
-    introduction:
-      "Maya notices things other people miss. She rarely trusts anyone quickly, but there is more to her than she lets people see."
-  },
-
-  Leo: {
-    name: "Leo",
-    role: "Technician and mechanic",
-    avatar: "⚡",
-    image: "assets/characters/leo.png",
-    personality: "Loyal, funny, protective, and secretly sensitive.",
-    introduction:
-      "Leo works with machines, but understanding people is a different challenge. He hides his worries behind jokes."
-  },
-
-  Aria: {
-    name: "Aria",
-    role: "Musician and digital artist",
-    avatar: "🎵",
-    image: "assets/characters/aria.png",
-    personality: "Confident, playful, creative, and emotional.",
-    introduction:
-      "Aria lives through music. She loves making people smile, although her own heart carries a few unfinished songs."
-  }
-};
-
-/* ==========================================
-   4. GAME UTILITIES
-========================================== */
-
-const $ = id => document.getElementById(id);
-
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
-
-function notify(message) {
-  const box = $("notice");
-  if (!box) return;
-
-  box.textContent = message;
-  box.classList.add("show");
-
-  clearTimeout(notify.timer);
-  notify.timer = setTimeout(() => {
-    box.classList.remove("show");
-  }, 2300);
-}
-
-function getPeriod() {
-  if (state.hour < 6) return "NIGHT";
-  if (state.hour < 12) return "MORNING";
-  if (state.hour < 17) return "AFTERNOON";
-  if (state.hour < 21) return "EVENING";
-  return "NIGHT";
-}
-
-function formatTime() {
-  return String(state.hour).padStart(2, "0") + ":" +
-    String(state.minute).padStart(2, "0");
-}
-
-function updateUI() {
-  $("money").textContent = "$" + state.money;
-  $("day").textContent = state.day;
-  $("time").textContent = formatTime();
-  $("period").textContent = getPeriod();
-
-  updateRelationshipIndicators();
-}
-
-function advanceTime(minutes = 30) {
-  let total = state.hour * 60 + state.minute + minutes;
-
-  while (total >= 1440) {
-    total -= 1440;
-    state.day++;
-    notify("A new day has begun.");
-  }
-
-  state.hour = Math.floor(total / 60);
-  state.minute = total % 60;
-
-  updateUI();
-}
-
-/* ==========================================
-   5. DIALOGUE SYSTEM
-========================================== */
-
-let currentDialogueAction = null;
-
-function say(speaker, message, options = []) {
-  $("speaker").textContent = speaker;
-  $("message").textContent = message;
-
-  $("choices").innerHTML = "";
-
-  state.dialogueHistory.push({
-    day: state.day,
-    time: formatTime(),
-    speaker,
-    message
-  });
-
-  if (state.dialogueHistory.length > 150) {
-    state.dialogueHistory.shift();
-  }
-
-  if (options.length) {
-    $("next-dialogue-button").style.display = "none";
-
-    options.forEach(option => {
-      const button = document.createElement("button");
-      button.className = "choice-button";
-      button.textContent = option.text;
-
-      button.addEventListener("click", () => {
-        $("choices").innerHTML = "";
-        $("next-dialogue-button").style.display = "inline-block";
-
-        if (typeof option.action === "function") {
-          option.action();
-        }
-      });
-
-      $("choices").appendChild(button);
-    });
-  } else {
-    $("next-dialogue-button").style.display = "inline-block";
-  }
-}
-
-function continueDialogue() {
-  if (currentDialogueAction) {
-    const action = currentDialogueAction;
-    currentDialogueAction = null;
-    action();
-    return;
-  }
-
-  say("SYSTEM", "Explore the location. Click a glowing object to interact with it.");
-}
-
-/* ==========================================
-   6. CHARACTER AND RELATIONSHIP SYSTEM
-========================================== */
-
-function changeRelationship(name, amount) {
-  if (!state.relationships[name]) {
-    state.relationships[name] = 0;
-  }
-
-  state.relationships[name] = Math.max(
-    0,
-    Math.min(100, state.relationships[name] + amount)
-  );
-
-  updateRelationshipIndicators();
-
-  if (amount > 0) {
-    notify("Your connection with " + name + " has grown. ♥");
-  } else if (amount < 0) {
-    notify("Your connection with " + name + " has weakened.");
-  }
-}
-
-function relationshipLevel(score) {
-  if (score >= 85) return "Deep Connection";
-  if (score >= 65) return "Close Bond";
-  if (score >= 40) return "Growing Affection";
-  if (score >= 20) return "Friend";
-  if (score > 0) return "Getting Closer";
-  return "Strangers";
-}
-
-function updateRelationshipIndicators() {
-  document.querySelectorAll(".profile-card").forEach(card => {
-    const name = card.dataset.person;
-    const score = state.relationships[name] || 0;
-    const heart = card.querySelector(".profile-heart");
-
-    if (heart) {
-      heart.textContent = score >= 65 ? "♥" : score >= 20 ? "♡" : "·";
-    }
-  });
-}
-
-function showCharacter(name) {
-  const person = people[name];
-  if (!person) return;
-
-  state.currentCharacter = name;
-
-  const image = $("character");
-  const placeholder = $("character-placeholder");
-
-  image.style.display = "none";
-  placeholder.style.display = "block";
-  placeholder.textContent = person.avatar;
-
-  image.onload = () => {
-    image.style.display = "block";
-    placeholder.style.display = "none";
-  };
-
-  image.onerror = () => {
-    image.style.display = "none";
-    placeholder.style.display = "block";
-    placeholder.textContent = person.avatar;
-  };
-
-  image.src = person.image;
-}
-
-function hideCharacter() {
-  $("character").style.display = "none";
-  $("character-placeholder").style.display = "none";
-  state.currentCharacter = null;
-}
-
-/* ==========================================
-   7. LOCATION ENGINE
-========================================== */
-
-function renderHotspots() {
-  const layer = $("hotspot-layer");
-  layer.innerHTML = "";
-
-  const location = locations[state.location];
-  if (!location) return;
-
-  location.hotspots.forEach(hotspot => {
-    const button = document.createElement("button");
-
-    button.className = "hotspot";
-    button.textContent = hotspot.label;
-    button.style.left = hotspot.x + "%";
-    button.style.top = hotspot.y + "%";
-
-    button.addEventListener("click", () => {
-      interact(hotspot.id);
-    });
-
-    layer.appendChild(button);
-  });
-}
-
-function goTo(locationId) {
-  const location = locations[locationId];
-
-  if (!location) {
-    notify("Unknown location.");
-    return false;
-  }
-
-  state.location = locationId;
-
-  if (!state.visited.includes(locationId)) {
-    state.visited.push(locationId);
-  }
-
-  if (!state.discovered.includes(locationId)) {
-    state.discovered.push(locationId);
-  }
-
-  $("location").textContent = location.name;
-  $("scene-hint").textContent = location.description;
-
-  $("scene").style.backgroundImage =
-    "linear-gradient(180deg, rgba(8,8,20,.08), rgba(8,8,20,.72)), " +
-    "url('" + location.image + "')";
-
-  hideCharacter();
-  renderHotspots();
-  updateUI();
-
-  advanceTime(15);
-
-  say(
-    "SYSTEM",
-    "You arrived at " + location.name + ". " + location.description
-  );
-
-  return true;
-}
-
-/* ==========================================
-   8. ITEMS AND MONEY
-========================================== */
-
-function addItem(item) {
-  if (state.inventory.includes(item)) {
-    notify("You already have this item.");
-    return false;
-  }
-
-  state.inventory.push(item);
-  notify(item + " added to your bag.");
-  return true;
-}
-
-function removeItem(item) {
-  const index = state.inventory.indexOf(item);
-
-  if (index === -1) return false;
-
-  state.inventory.splice(index, 1);
-  return true;
-}
-
-function buyCoffee() {
-  if (state.money < 10) {
-    say("BARISTA", "Sorry, you don't have enough money for coffee.");
-    return;
-  }
-
-  state.money -= 10;
-  addItem("Coffee");
-  state.storyFlags.bought_coffee = true;
-
-  updateUI();
-
-  say("BARISTA", "One coffee. That'll be ten dollars. Enjoy!");
-}
-
-/* ==========================================
-   9. QUEST SYSTEM
-========================================== */
-
-const questDefinitions = {
-  first_steps: {
-    title: "A New Beginning",
-    description: "Explore your apartment and step into the city.",
-    reward: 30,
-    check: () => state.storyFlags.left_apartment
-  },
-
-  first_contact: {
-    title: "Unexpected Encounters",
-    description: "Meet at least one person in the city.",
-    reward: 50,
-    check: () => (
-      state.storyFlags.met_Maya ||
-      state.storyFlags.met_Leo ||
-      state.storyFlags.met_Aria
-    )
-  },
-
-  city_explorer: {
-    title: "The City Awaits",
-    description: "Discover the cafe, laboratory, and park.",
-    reward: 75,
-    check: () => (
-      ["cafe", "lab", "park"].every(
-        place => state.discovered.includes(place)
-      )
-    )
-  },
-
-  coffee_break: {
-    title: "A Little Break",
-    description: "Buy your first coffee.",
-    reward: 20,
-    check: () => state.storyFlags.bought_coffee
-  },
-
-  growing_closer: {
-    title: "A Growing Connection",
-    description: "Reach 20 relationship points with someone.",
-    reward: 60,
-    check: () => Object.values(state.relationships).some(
-      score => score >= 20
-    )
-  }
-};
-
-function questCompleted(id) {
-  return state.completedQuests.includes(id);
-}
-
-function checkQuests() {
-  Object.entries(questDefinitions).forEach(([id, quest]) => {
-    if (questCompleted(id)) return;
-
-    if (quest.check()) {
-      state.completedQuests.push(id);
-      state.money += quest.reward;
-
-      notify("Quest completed: " + quest.title + " (+$" + quest.reward + ")");
-      updateUI();
-    }
-  });
-}
-
-/* ==========================================
-   10. CHARACTER INTERACTIONS
-========================================== */
-
-function meetCharacter(name) {
-  const person = people[name];
-  if (!person) return;
-
-  const flag = "met_" + name;
-
-  if (!state.storyFlags[flag]) {
-    state.storyFlags[flag] = true;
-
-    showCharacter(name);
-    changeRelationship(name, 5);
-
-    say(
-      name.toUpperCase(),
-      person.introduction,
-      [{
-        text: "It's nice to meet you.",
-        action: () => {
-          changeRelationship(name, 3);
-          say(name, "I hope we'll get to know each other.");
-          checkQuests();
-        }
-      }, {
-        text: "You seem interesting. Tell me more.",
-        action: () => {
-          changeRelationship(name, 5);
-          say(name, "Maybe I will. Let's see if you can keep up.");
-          checkQuests();
-        }
-      }]
-    );
-
-    checkQuests();
-    return;
-  }
-
-  talk(name);
-}
-
-function talk(name) {
-  const score = state.relationships[name] || 0;
-
-  showCharacter(name);
-
-  if (name === "Maya") {
-    say("MAYA", "You came back. I was wondering when I'd see you again.", [
-      {
-        text: "Were you waiting for me?",
-        action: () => {
-          changeRelationship("Maya", 4);
-          say("MAYA", "Don't make me admit things I haven't figured out yet.");
-        }
-      },
-      {
-        text: "I wanted to see you.",
-        action: () => {
-          changeRelationship("Maya", 6);
-          say("MAYA", "That's... unexpectedly nice to hear.");
-        }
-      },
-      {
-        text: "How is your research going?",
-        action: () => {
-          say("MAYA", "Strange signals. Strange people. And now you.");
-        }
-      }
-    ]);
-  }
-
-  if (name === "Leo") {
-    say("LEO", "There you are! I was beginning to think the city had swallowed you.", [
-      {
-        text: "You missed me?",
-        action: () => {
-          changeRelationship("Leo", 4);
-          say("LEO", "Maybe a little. Don't let it go to your head.");
-        }
-      },
-      {
-        text: "I always enjoy talking to you.",
-        action: () => {
-          changeRelationship("Leo", 6);
-          say("LEO", "Well, then I guess I'll have to make time for you.");
-        }
-      },
-      {
-        text: "Need help with anything?",
-        action: () => {
-          say("LEO", "Actually, I could use another pair of eyes on a machine.");
-        }
-      }
-    ]);
-  }
-
-  if (name === "Aria") {
-    say("ARIA", "Look who's here! My favorite unexpected interruption.", [
-      {
-        text: "Am I your favorite?",
-        action: () => {
-          changeRelationship("Aria", 5);
-          say("ARIA", "You're definitely making a strong case.");
-        }
-      },
-      {
-        text: "I came to hear your music.",
-        action: () => {
-          changeRelationship("Aria", 6);
-          say("ARIA", "Then this next song is dedicated to you.");
-        }
-      },
-      {
-        text: "You always seem happy.",
-        action: () => {
-          say("ARIA", "Not always. But music helps me find my way back.");
-        }
-      }
-    ]);
-  }
-
-  if (score >= 20) {
-    notify(name + " seems more comfortable around you.");
-  }
-}
-
-/* ==========================================
-   11. HOTSPOT INTERACTIONS
-========================================== */
-
-function interact(action) {
-  switch (action) {
-
-    case "computer":
-      say("SYSTEM", "Your computer screen flickers. An encrypted message appears.", [
-        {
-          text: "Open the message",
-          action: () => {
-            state.storyFlags.message_found = true;
-            addItem("Encrypted Message");
-            say("UNKNOWN", "You don't know me yet. But this city is not what it seems.");
-            checkQuests();
-          }
-        },
-        {
-          text: "Leave it alone",
-          action: () => say("SYSTEM", "You decide to investigate it later.")
-        }
-      ]);
-      break;
-
-    case "window":
-      say("YOU", "The city lights look beautiful tonight. Somewhere out there, a new story is waiting.");
-      break;
-
-    case "bed":
-      if (state.hour >= 21 || state.hour < 6) {
-        state.day++;
-        state.hour = 8;
-        state.minute = 0;
-        updateUI();
-        say("SYSTEM", "You wake up refreshed. A new day begins.");
-      } else {
-        say("YOU", "It's too early to sleep. There are still things to discover.");
-      }
-      break;
-
-    case "door":
-      state.storyFlags.left_apartment = true;
-      goTo("street");
-      checkQuests();
-      break;
-
-    case "street":
-      goTo("street");
-      break;
-
-    case "apartment":
-      goTo("apartment");
-      break;
-
-    case "cafe":
-      goTo("cafe");
-      break;
-
-    case "lab":
-      goTo("lab");
-      break;
-
-    case "park":
-      goTo("park");
-      break;
-
-    case "maya":
-      meetCharacter("Maya");
-      break;
-
-    case "leo":
-      meetCharacter("Leo");
-      break;
-
-    case "aria":
-      meetCharacter("Aria");
-      break;
-
-    case "coffee":
-      buyCoffee();
-      break;
-
-    case "terminal":
-      if (state.inventory.includes("Encrypted Message")) {
-        say("SYSTEM", "The terminal recognizes the encrypted message. Someone has been watching the city's network.");
-        state.storyFlags.terminal_accessed = true;
-      } else {
-        say("SYSTEM", "The terminal is locked. You need an encrypted access message.");
-      }
-      break;
-
-    case "signal":
-      if (!state.storyFlags.signal_found) {
-        state.storyFlags.signal_found = true;
-        addItem("Signal Fragment");
-        say("SYSTEM", "You discovered a strange signal fragment hidden inside the equipment.");
-      } else {
-        say("SYSTEM", "The signal has already been collected.");
-      }
-      break;
-
-    case "bench":
-      say("YOU", "You sit down and enjoy the quiet for a moment.");
-      advanceTime(30);
-      break;
-
-    default:
-      say("SYSTEM", "There is nothing to interact with here.");
-  }
-
-  checkQuests();
-}
-
-/* ==========================================
-   12. SCREEN AND PANEL SYSTEM
-========================================== */
-
-function openPanel(title, html) {
-  $("panel-title").textContent = title;
-  $("panel-content").innerHTML = html;
-  $("panel").classList.add("active");
-}
-
-function closePanel() {
-  $("panel").classList.remove("active");
-}
-
-function showHome() {
-  closePanel();
-  say("SYSTEM", "Welcome back. Your story is still unfolding.");
-}
-
-function showMap() {
-  const html = `
-    <p>Choose a place to visit.</p>
-    <div class="card-grid">
-      ${Object.entries(locations).map(([id, location]) => `
-        <div class="world-card city-location">
-          <h3>${escapeHTML(location.name)}</h3>
-          <p>${escapeHTML(location.description)}</p>
-          <button class="primary-button" data-travel="${id}">TRAVEL HERE</button>
-        </div>
-      `).join("")}
-    </div>
-  `;
-
-  openPanel("EXPLORE THE CITY", html);
-}
-
-function showPeople() {
-  const html = `
-    <p>People you may come to know. Every conversation can change your relationship.</p>
-    <div class="card-grid">
-      ${Object.values(people).map(person => {
-        const score = state.relationships[person.name] || 0;
-        return `
-          <div class="world-card">
-            <h3>${person.avatar} ${person.name}</h3>
-            <p>${escapeHTML(person.role)}</p>
-            <p>${escapeHTML(person.personality)}</p>
-            <p class="heart">${relationshipLevel(score)} · ${score}/100</p>
-            <button class="primary-button" data-talk="${person.name}">TALK</button>
-          </div>
-        `;
-      }).join("")}
-    </div>
-  `;
-
-  openPanel("PEOPLE OF THE CITY", html);
-}
-
-function showQuests() {
-  const html = Object.entries(questDefinitions).map(([id, quest]) => {
-    const done = questCompleted(id);
-
-    return `
-      <div class="quest-row">
-        <strong>${done ? "✓ " : "◇ "}${escapeHTML(quest.title)}</strong>
-        <div>${escapeHTML(quest.description)}</div>
-        <small>${done ? "COMPLETED" : "REWARD: $" + quest.reward}</small>
-      </div>
-    `;
-  }).join("");
-
-  openPanel("QUESTS", html);
-}
-
-function showInventory() {
-  const items = state.inventory.length
-    ? state.inventory.map(item =>
-        `<span class="item-pill">${escapeHTML(item)}</span>`
-      ).join("")
-    : "<p>Your bag is empty.</p>";
-
-  openPanel("YOUR INVENTORY", `
-    <p>Items you have collected during your journey.</p>
-    ${items}
-    <p class="dialogue-note">Some objects may unlock new story events.</p>
-  `);
-}
-
-function showBonds() {
-  const html = Object.keys(people).map(name => {
-    const score = state.relationships[name] || 0;
-    const person = people[name];
-
-    return `
-      <div class="relationship-card">
-        <div class="relationship-avatar">${person.avatar}</div>
-        <div class="relationship-info">
-          <div class="relationship-name">${name}</div>
-          <div class="relationship-level">${relationshipLevel(score)}</div>
-          <div class="relationship-bar">
-            <div class="relationship-fill" style="width:${score}%"></div>
-          </div>
-        </div>
-        <div class="heart">${score}/100</div>
-      </div>
-    `;
-  }).join("");
-
-  openPanel("RELATIONSHIPS ♥", `
-    <p>Trust, friendship, and romance grow through your choices.</p>
-    ${html}
-  `);
-}
-
-/* ==========================================
-   13. PANEL CLICK HANDLING
-========================================== */
-
-$("panel-content").addEventListener("click", event => {
-  const travel = event.target.closest("[data-travel]");
-  const talkButton = event.target.closest("[data-talk]");
-
-  if (travel) {
-    const destination = travel.dataset.travel;
-    closePanel();
-    goTo(destination);
-  }
-
-  if (talkButton) {
-    const name = talkButton.dataset.talk;
-    closePanel();
-    talk(name);
-  }
-});
-
-/* ==========================================
-   14. MAIN NAVIGATION
-========================================== */
-
-function openScreen(screen) {
-  document.querySelectorAll(".nav-button").forEach(button => {
-    button.classList.toggle(
-      "active",
-      button.dataset.screen === screen
-    );
-  });
-
-  switch (screen) {
-    case "HOME": showHome(); break;
-    case "CITY": showMap(); break;
-    case "PEOPLE": showPeople(); break;
-    case "QUESTS": showQuests(); break;
-    case "INVENTORY": showInventory(); break;
-    case "BONDS": showBonds(); break;
-    case "SAVE":
-      if (window.MatrixSave) window.MatrixSave.render();
-      else notify("Save system is loading in Part 3.");
-      break;
-    case "SOUND":
-      if (window.MatrixAudio) window.MatrixAudio.renderSettings();
-      else notify("Audio settings are loading in Part 3.");
-      break;
-  }
-}
-
-document.querySelector(".navigation").addEventListener("click", event => {
-  const button = event.target.closest("[data-screen]");
-  if (!button) return;
-  openScreen(button.dataset.screen);
-});
-
-document.querySelectorAll(".profile-card").forEach(card => {
-  card.addEventListener("click", () => {
-    const name = card.dataset.person;
-    if (!state.storyFlags["met_" + name]) {
-      say("SYSTEM", "You haven't met " + name + " yet. Explore the city to find them.");
-    } else {
-      talk(name);
-    }
-  });
-});
-
-$("close-panel-button").addEventListener("click", closePanel);
-$("next-dialogue-button").addEventListener("click", continueDialogue);
-
-/* ==========================================
-   15. STARTING STORY
-========================================== */
-
-function startGame() {
-  state.started = true;
-
-  $("start-screen").style.display = "none";
-
-  goTo("apartment");
-
-  say(
-    "NARRATOR",
-    "DAY 1. 8:00 AM. A NEW BEGINNING.\n\nYou wake up in a small apartment in a city you barely know. Outside, neon lights shine against the morning mist. Your phone vibrates. One unknown message appears:\n\n'Welcome to the city. Your life is about to change.'",
-    [{
-      text: "Check the mysterious message",
-      action: () => {
-        state.storyFlags.message_found = true;
-        addItem("Encrypted Message");
-        say("YOU", "Who sent this? And how did they get my number?");
-      }
-    }, {
-      text: "Ignore it and explore the apartment",
-      action: () => {
-        say("YOU", "I should get ready and see what this city has to offer.");
-      }
-    }]
-  );
-}
-
-$("start-game-button").addEventListener("click", () => {
-  startGame();
-});
-
-$("continue-game-button").addEventListener("click", () => {
-  if (window.MatrixSave && window.MatrixSave.loadAutosave()) {
-    $("start-screen").style.display = "none";
-    notify("Welcome back.");
-  } else {
-    startGame();
-  }
-});
-
-/* ==========================================
-   16. PUBLIC GAME API
-========================================== */
-
-window.MatrixCore = {
-  state,
-  locations,
-  people,
-
-  goTo,
-  say,
-  talk,
-  meetCharacter,
-  showCharacter,
-  hideCharacter,
-
-  advanceTime,
-  interact,
-
-  addItem,
-  removeItem,
-  buyCoffee,
-
-  changeRelationship,
-  relationshipLevel,
-
-  checkQuests,
-  questDefinitions,
-
-  showMap,
-  showPeople,
-  showQuests,
-  showInventory,
-  showBonds,
-
-  openPanel,
-  closePanel,
-  notify,
-  updateUI,
-
-  startGame
-};
-
-/* ==========================================
-   17. INITIAL DISPLAY
-========================================== */
-
-updateUI();
-renderHotspots();
-
-console.log("MATRIX CORE ONLINE");
-console.log("Waiting for player to start.");
-
-})();
-</script>
-
-<!-- PART 3 GOES BELOW THIS LINE -->
-
-  
-<!-- ==========================================
-     MATRIX: DIGITAL LIFE
-     PART 3: STORY, CINEMA, AUDIO AND SAVES
-========================================== -->
-
-<style>
-/* STORY MENU */
-
-.story-chapter {
-  padding: 15px;
-  margin: 10px 0;
-  background: linear-gradient(120deg,#211b39,#14182b);
-  border: 1px solid var(--line);
-  border-radius: 13px;
-}
-
-.story-chapter h3 {
-  margin: 0 0 6px;
-  color: var(--purple);
-  font-size: 14px;
-}
-
-.story-chapter p {
-  margin: 5px 0 12px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.story-status {
-  font-size: 10px;
-  color: var(--green);
-  letter-spacing: 1px;
-}
-
-.save-slot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 13px;
-  margin: 9px 0;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--panel2);
-}
-
-.save-slot-info {
-  min-width: 0;
-}
-
-.save-slot-info strong {
-  display: block;
-  font-size: 12px;
-}
-
-.save-slot-info small {
-  color: var(--muted);
-  font-size: 10px;
-}
-
-.save-slot-actions {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-
-.save-slot-actions button {
-  padding: 7px 9px;
-  font-size: 10px;
-}
-
-.setting-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 12px;
-}
-
-.setting-row input {
-  accent-color: var(--purple);
-  max-width: 130px;
-}
-
-.ending-card {
-  padding: 18px;
-  border-radius: 14px;
-  background: linear-gradient(135deg,#342044,#18233b);
-  border: 1px solid rgba(255,120,200,.35);
-  text-align: center;
-}
-
-.ending-card h3 {
-  color: var(--pink);
-}
-
-.cinema-skip {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  z-index: 5;
-}
-
-#cinematic-layer {
-  overflow: hidden;
-}
-
-#cinematic-background {
-  transition: background-image .5s ease, opacity .5s ease;
-}
-
-#cinematic-choices .choice-button {
-  background: rgba(40,30,65,.9);
-}
-
-@media (max-width: 520px) {
-  .save-slot {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-</style>
-
-<script>
-(() => {
-"use strict";
-
-const Core = window.MatrixCore;
-if (!Core) {
-  console.error("MATRIX CORE is missing. Check Part 2.");
-  return;
-}
-
-const state = Core.state;
-const $ = id => document.getElementById(id);
-
-/* ==========================================
-   1. CINEMATIC STORY ENGINE
-========================================== */
-
-const MatrixCinema = window.MatrixCinema = {
-  active: false,
-  typing: false,
-  timer: null,
-  currentChapter: null,
-  currentScene: 0,
-  currentText: "",
-  onFinish: null,
-
-  chapters: {},
-
-  registerChapter(id, chapter) {
-    this.chapters[id] = chapter;
-  },
-
-  stopTyping() {
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
-    this.typing = false;
-  },
-
-  playChapter(id) {
-    const chapter = this.chapters[id];
-
-    if (!chapter) {
-      Core.notify("This chapter is not available yet.");
-      return false;
-    }
-
-    this.currentChapter = id;
-    this.currentScene = 0;
-    this.active = true;
-
-    const layer = $("cinematic-layer");
-    layer.classList.add("active");
-
-    this.renderScene();
-    return true;
-  },
-
-  renderScene() {
-    const chapter = this.chapters[this.currentChapter];
-    if (!chapter) return;
-
-    const scene = chapter.scenes[this.currentScene];
-    if (!scene) {
-      this.finishChapter();
-      return;
-    }
-
-    this.stopTyping();
-
-    $("cinematic-chapter").textContent =
-      chapter.title.toUpperCase();
-
-    $("cinematic-background").style.backgroundImage =
-      scene.background
-        ? "linear-gradient(rgba(8,8,20,.2),rgba(8,8,20,.55)),url('" +
-          scene.background + "')"
-        : "radial-gradient(circle at 50% 30%,#3a2855,#090914 75%)";
-
-    const characterImage = $("cinematic-character");
-
-    if (scene.character && Core.people[scene.character]) {
-      characterImage.style.display = "block";
-      characterImage.src = Core.people[scene.character].image;
-      characterImage.onerror = () => {
-        characterImage.style.display = "none";
-      };
-    } else {
-      characterImage.style.display = "none";
-    }
-
-    $("cinematic-speaker").textContent =
-      scene.speaker || "NARRATOR";
-
-    $("cinematic-choices").innerHTML = "";
-
-    this.currentText = scene.text || "";
-    this.typeText(this.currentText);
-
-    const next = $("cinematic-next");
-    next.style.display = scene.choices ? "none" : "inline-block";
-  },
-
-  typeText(text) {
-    const target = $("cinematic-message");
-    target.textContent = "";
-    this.typing = true;
-
-    let index = 0;
-    const characters = Array.from(text);
-
-    this.timer = setInterval(() => {
-      target.textContent += characters[index] || "";
-      index++;
-
-      if (index >= characters.length) {
-        this.stopTyping();
-      }
-    }, 22);
-  },
-
-  next() {
-    if (this.typing) {
-      this.stopTyping();
-      $("cinematic-message").textContent = this.currentText;
-      return;
-    }
-
-    const chapter = this.chapters[this.currentChapter];
-    const scene = chapter.scenes[this.currentScene];
-
-    if (scene.choices) return;
-
-    this.currentScene++;
-    this.renderScene();
-  },
-
-  choose(choice) {
-    const chapter = this.chapters[this.currentChapter];
-    const scene = chapter.scenes[this.currentScene];
-
-    if (!scene || !scene.choices) return;
-
-    this.stopTyping();
-
-    if (typeof choice.action === "function") {
-      choice.action();
-    }
-
-    if (choice.next !== undefined) {
-      this.currentScene = choice.next;
-      this.renderScene();
-    } else {
-      this.currentScene++;
-      this.renderScene();
-    }
-  },
-
-  renderChoices(choices) {
-    const container = $("cinematic-choices");
-    container.innerHTML = "";
-
-    choices.forEach(choice => {
-      const button = document.createElement("button");
-      button.className = "choice-button";
-      button.textContent = choice.text;
-
-      button.addEventListener("click", () => {
-        this.choose(choice);
-      });
-
-      container.appendChild(button);
-    });
-  },
-
-  finishChapter() {
-    this.stopTyping();
-
-    const id = this.currentChapter;
-    state.storyFlags["completed_" + id] = true;
-
-    this.active = false;
-    $("cinematic-layer").classList.remove("active");
-
-    Core.notify("Chapter completed: " + id);
-    Core.checkQuests();
-
-    MatrixSave.autosave();
-
-    if (typeof this.onFinish === "function") {
-      this.onFinish(id);
-    }
-  },
-
-  close() {
-    this.stopTyping();
-    this.active = false;
-    $("cinematic-layer").classList.remove("active");
-  }
-};
-
-/* CINEMATIC BUTTONS */
-
-$("cinematic-next").addEventListener("click", () => {
-  MatrixCinema.next();
-});
-
-$("cinematic-close").addEventListener("click", () => {
-  MatrixCinema.close();
-});
-
-/* ==========================================
-   2. CHAPTER 1: A NEW BEGINNING
-========================================== */
-
-MatrixCinema.registerChapter("chapter1", {
-  title: "Chapter 1: A New Beginning",
-
-  scenes: [
-    {
-      background: "assets/scenes/city-night.jpg",
-      speaker: "NARRATOR",
-      text:
-        "The city never truly sleeps. Neon lights paint the wet streets, distant trains echo between buildings, and thousands of people chase dreams they rarely speak about.\n\nTonight, you arrive with nothing but a small apartment, an old phone, and the feeling that something is about to change."
-    },
-    {
-      background: "assets/scenes/apartment.jpg",
-      speaker: "UNKNOWN MESSAGE",
-      text:
-        "Your phone vibrates.\n\nUNKNOWN: Welcome to the city. You have been noticed.\n\nA second message appears.\n\nUNKNOWN: Be careful who you trust. Especially the people who seem to know you already."
-    },
-    {
-      background: "assets/scenes/apartment.jpg",
-      speaker: "YOU",
-      text:
-        "Who sends a message like that? I don't even know anyone here."
-    },
-    {
-      background: "assets/scenes/street.jpg",
-      speaker: "NARRATOR",
-      text:
-        "You step outside. The cool air carries the smell of rain. Somewhere nearby, music drifts from a small cafe."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      speaker: "NARRATOR",
-      text:
-        "You enter the cafe. A young woman sits by the window, sketching something in a notebook. At the counter, a technician struggles with a stubborn machine. Music plays softly from a speaker."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      character: "Maya",
-      speaker: "MAYA",
-      text:
-        "You're new here, aren't you?\n\nShe looks up from her notebook. Her expression is calm, but her eyes seem unusually curious."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      speaker: "MAYA",
-      character: "Maya",
-      text:
-        "I don't usually talk to strangers. But something tells me you're going to become part of this city's story."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      speaker: "YOU",
-      text:
-        "You can either smile, ask her what she means, or pretend you didn't hear that strange comment."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      speaker: "MAYA",
-      character: "Maya",
-      text:
-        "That's an interesting answer. Most people don't pay attention to the things that matter."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      speaker: "NARRATOR",
-      text:
-        "For a moment, neither of you speaks. Outside, the rain begins to fall harder. Maya closes her notebook."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      character: "Maya",
-      speaker: "MAYA",
-      text:
-        "Maybe we'll meet again. I'd like to know what brought you here."
-    },
-    {
-      background: "assets/scenes/city-night.jpg",
-      speaker: "NARRATOR",
-      text:
-        "You leave the cafe with more questions than answers. You don't know it yet, but this is the beginning of several unexpected connections."
-    }
-  ]
-});
-
-/* Add choices to the opening chapter's scene 8 */
-
-MatrixCinema.chapters.chapter1.scenes[7].choices = [
-  {
-    text: "Smile. 'Maybe I was meant to meet you.'",
-    action: () => {
-      Core.changeRelationship("Maya", 8);
-      state.storyFlags.maya_first_flirt = true;
-    },
-    next: 8
-  },
-  {
-    text: "Ask: 'What do you mean by that?'",
-    action: () => {
-      Core.changeRelationship("Maya", 4);
-      state.storyFlags.maya_first_question = true;
-    },
-    next: 8
-  },
-  {
-    text: "Say: 'I guess I'll find out.'",
-    action: () => {
-      Core.changeRelationship("Maya", 2);
-      state.storyFlags.maya_cautious_intro = true;
-    },
-    next: 8
-  }
+// ALL 39 PHOTOS
+
+const photos = [
+"1000008504.jpg",
+"1000008503.jpg",
+"1000008502.jpg",
+"1000008501.jpg",
+"1000008500.jpg",
+"1000008499.jpg",
+"1000008496.jpg",
+"1000008495.jpg",
+"1000008494.jpg",
+"1000008493.jpg",
+"1000008497.jpg",
+"1000008447.jpg",
+"1000008446.jpg",
+"1000008445.jpg",
+"1000008444.jpg",
+"1000008443.jpg",
+"1000008442.jpg",
+"1000008441.jpg",
+"1000008439.jpg",
+"1000008427.jpg",
+"1000008425.jpg",
+"1000008424.jpg",
+"1000008423.jpg",
+"1000008422.jpg",
+"1000008421.jpg",
+"1000008489.jpg",
+"1000008488.jpg",
+"1000008528.jpg",
+"1000008531.jpg",
+"1000008536.jpg",
+"1000008512.jpg",
+"1000008530.jpg",
+"1000008426.jpg",
+"1000008440.jpg",
+"1000008460.jpg",
+"1000008461.jpg",
+"1000008526.jpg",
+"1000008534.jpg",
+"1000008537.jpg"
 ];
 
-/* ==========================================
-   3. CHAPTER 2: THREE CONNECTIONS
-========================================== */
+// Generate photo cards
 
-MatrixCinema.registerChapter("chapter2", {
-  title: "Chapter 2: Three Connections",
+function createGallery(id, start, end) {
+    const gallery = document.getElementById(id);
 
-  scenes: [
-    {
-      background: "assets/scenes/street.jpg",
-      speaker: "NARRATOR",
-      text:
-        "The next morning, the city feels different. You remember the mysterious message and the woman from the cafe. There are still many unanswered questions."
-    },
-    {
-      background: "assets/scenes/laboratory.jpg",
-      character: "Leo",
-      speaker: "LEO",
-      text:
-        "Hey! You look like someone who could use a little help. I'm Leo. I fix machines, solve problems, and occasionally make terrible jokes."
-    },
-    {
-      background: "assets/scenes/laboratory.jpg",
-      character: "Leo",
-      speaker: "LEO",
-      text:
-        "I was beginning to think I'd spend another day talking to broken machines. At least you're more interesting."
-    },
-    {
-      background: "assets/scenes/park.jpg",
-      character: "Aria",
-      speaker: "ARIA",
-      text:
-        "Wait, don't move. I'm trying to remember your face for a song.\n\nShe laughs and puts her headphones around her neck."
-    },
-    {
-      background: "assets/scenes/park.jpg",
-      character: "Aria",
-      speaker: "ARIA",
-      text:
-        "I'm Aria. I make music, collect strange stories, and occasionally meet people who make the world feel less ordinary."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      character: "Maya",
-      speaker: "MAYA",
-      text:
-        "You came back. I wasn't sure you would.\n\nShe gives you a small smile, then looks away."
-    },
-    {
-      background: "assets/scenes/cafe.jpg",
-      character: "Maya",
-      speaker: "MAYA",
-      text:
-        "I suppose it's nice when someone remembers you. Even if I pretend not to care."
-    },
-    {
-      background: "assets/scenes/city-night.jpg",
-      speaker: "NARRATOR",
-      text:
-        "Three people. Three different worlds. Each of them seems to be hiding something, and each encounter leaves you wanting to know more."
-    }
-  ]
-});
+    photos.slice(start, end).forEach((photo, index) => {
+        const realIndex = start + index;
 
-/* ==========================================
-   4. CHARACTER ROMANCE EVENTS
-========================================== */
+        const card = document.createElement("div");
+        card.className = "photo";
 
-const romanceScenes = {
+        card.innerHTML = `
+            <img src="${photo}" loading="lazy"
+                 alt="Photo ${realIndex + 1}">
+            <div class="photo-info">
+                <small>FRAME ${String(realIndex + 1).padStart(2, '0')}</small>
+                <h3>THE COLLECTION</h3>
+            </div>
+        `;
 
-  Maya: {
-    title: "Maya: Under the Same Sky",
-    background: "assets/scenes/park.jpg",
-    text:
-      "The park is almost empty. Maya stands beneath a streetlight, watching the rain fall through the trees.\n\nMAYA: I come here when everything feels too loud. It's strange... lately, I find myself hoping someone will join me."
-  },
+        card.onclick = () => openImage(realIndex);
 
-  Leo: {
-    title: "Leo: After Hours",
-    background: "assets/scenes/laboratory.jpg",
-    text:
-      "The laboratory is quiet after closing. Leo sits beside a half-repaired machine.\n\nLEO: I spend so much time fixing things that I forget to take care of myself. It's easier when you're around, somehow."
-  },
-
-  Aria: {
-    title: "Aria: A Song for Two",
-    background: "assets/scenes/cafe.jpg",
-    text:
-      "Aria sits at the cafe piano. She plays a gentle melody, then looks up at you.\n\nARIA: I haven't played this for anyone. I guess I wanted you to hear it first."
-  }
-};
-
-function playRomanceScene(name) {
-  const score = state.relationships[name] || 0;
-
-  if (score < 40) {
-    Core.notify("You need a closer connection before this scene unlocks.");
-    return;
-  }
-
-  const scene = romanceScenes[name];
-  if (!scene) return;
-
-  const alreadyPlayed = state.storyFlags["romance_" + name];
-
-  if (alreadyPlayed) {
-    Core.notify("You've already experienced this special scene.");
-    return;
-  }
-
-  state.storyFlags["romance_" + name] = true;
-
-  MatrixCinema.chapters["romance_" + name] = {
-    title: scene.title,
-    scenes: [
-      {
-        background: scene.background,
-        character: name,
-        speaker: name.toUpperCase(),
-        text: scene.text
-      },
-      {
-        background: scene.background,
-        character: name,
-        speaker: name.toUpperCase(),
-        text:
-          name === "Maya"
-            ? "MAYA: I don't know what this is yet. But I don't want to rush away from it."
-            : name === "Leo"
-              ? "LEO: I don't usually say things like this. But being with you makes the long days feel shorter."
-              : "ARIA: Maybe some songs don't need lyrics. Maybe they just need the right person listening."
-      }
-    ]
-  };
-
-  MatrixCinema.playChapter("romance_" + name);
-  Core.changeRelationship(name, 5);
+        gallery.appendChild(card);
+    });
 }
 
-/* ==========================================
-   5. STORY MENU
-========================================== */
+// Split all images into two scrollable galleries
 
-function showStoryMenu() {
-  const chapters = [
-    {
-      id: "chapter1",
-      title: "Chapter 1: A New Beginning",
-      description: "Arrive in the city and encounter your first mystery."
-    },
-    {
-      id: "chapter2",
-      title: "Chapter 2: Three Connections",
-      description: "Meet the three people who may change your life."
-    }
-  ];
+createGallery("gallery1", 0, 20);
+createGallery("gallery2", 20, 39);
 
-  const chapterHTML = chapters.map(chapter => {
-    const complete = !!state.storyFlags["completed_" + chapter.id];
-    const locked = chapter.id === "chapter2" &&
-      !state.storyFlags.completed_chapter1;
+// FULLSCREEN IMAGE VIEWER
 
-    return `
-      <div class="story-chapter">
-        <h3>${chapter.title}</h3>
-        <p>${chapter.description}</p>
-        <div class="story-status">
-          ${complete ? "COMPLETED" : locked ? "LOCKED" : "AVAILABLE"}
-        </div>
-        <button
-          class="primary-button"
-          data-chapter="${chapter.id}"
-          ${locked ? "disabled" : ""}
-          style="${locked ? "opacity:.4" : ""};margin-top:10px"
-        >
-          ${complete ? "PLAY AGAIN" : "START CHAPTER"}
-        </button>
-      </div>
-    `;
-  }).join("");
+let currentImage = 0;
 
-  const romanceHTML = Object.keys(romanceScenes).map(name => {
-    const score = state.relationships[name] || 0;
-    const unlocked = score >= 40;
+function openImage(index) {
+    currentImage = index;
 
-    return `
-      <div class="story-chapter">
-        <h3>${name}'s Special Story ♥</h3>
-        <p>${unlocked ? "A special moment is waiting for you." : "Reach 40 relationship points to unlock this scene."}</p>
-        <div class="story-status">${unlocked ? "UNLOCKED" : score + "/40 AFFECTION"}</div>
-        <button
-          class="primary-button"
-          data-romance="${name}"
-          ${!unlocked || state.storyFlags["romance_" + name] ? "disabled" : ""}
-          style="${!unlocked || state.storyFlags["romance_" + name] ? "opacity:.4" : ""};margin-top:10px"
-        >
-          ${state.storyFlags["romance_" + name] ? "COMPLETED" : "PLAY SCENE"}
-        </button>
-      </div>
-    `;
-  }).join("");
+    document.getElementById("lightboxImg").src =
+        photos[currentImage];
 
-  Core.openPanel("STORY & CHAPTERS", `
-    <p>Your decisions shape your story. Special character scenes unlock as your relationships grow.</p>
-    ${chapterHTML}
-    <h3 style="margin-top:22px;color:var(--pink)">SPECIAL ROMANCE STORIES</h3>
-    ${romanceHTML}
-  `);
+    document.getElementById("lightbox").classList.add("active");
+
+    document.body.style.overflow = "hidden";
 }
 
-$("panel-content").addEventListener("click", event => {
-  const chapterButton = event.target.closest("[data-chapter]");
-  const romanceButton = event.target.closest("[data-romance]");
-
-  if (chapterButton) {
-    const id = chapterButton.dataset.chapter;
-    Core.closePanel();
-    MatrixCinema.playChapter(id);
-  }
-
-  if (romanceButton) {
-    const name = romanceButton.dataset.romance;
-    Core.closePanel();
-    playRomanceScene(name);
-  }
-});
-
-/* ADD STORY NAV BUTTON */
-
-const storyButton = document.createElement("button");
-storyButton.className = "nav-button";
-storyButton.textContent = "STORY";
-storyButton.dataset.screen = "STORY";
-
-document.querySelector(".navigation").appendChild(storyButton);
-
-document.querySelector(".navigation").addEventListener("click", event => {
-  const button = event.target.closest('[data-screen="STORY"]');
-  if (button) {
-    document.querySelectorAll(".nav-button").forEach(item => {
-      item.classList.toggle("active", item === button);
-    });
-    showStoryMenu();
-  }
-});
-
-/* ==========================================
-   6. AUDIO ENGINE
-========================================== */
-
-const MatrixAudio = window.MatrixAudio = {
-  muted: false,
-
-  volumes: {
-    music: 0.35,
-    ambience: 0.4,
-    effects: 0.65
-  },
-
-  tracks: {
-    main: "assets/audio/music/main-theme.mp3",
-    apartment: "assets/audio/music/apartment.mp3",
-    city: "assets/audio/music/city.mp3",
-    cafe: "assets/audio/music/cafe.mp3",
-    mystery: "assets/audio/music/mystery.mp3"
-  },
-
-  ambienceTracks: {
-    apartment: "assets/audio/ambience/night-crickets.mp3",
-    street: "assets/audio/ambience/city-traffic.mp3",
-    cafe: "assets/audio/ambience/cafe-crowd.mp3",
-    lab: "assets/audio/ambience/laboratory.mp3",
-    park: "assets/audio/ambience/park-birds.mp3"
-  },
-
-  effects: {
-    click: "assets/audio/sfx/click.mp3",
-    notification: "assets/audio/sfx/notification.mp3",
-    door: "assets/audio/sfx/door.mp3",
-    success: "assets/audio/sfx/success.mp3",
-    failure: "assets/audio/sfx/failure.mp3",
-    typing: "assets/audio/sfx/typing.mp3"
-  },
-
-  musicAudio: null,
-  ambienceAudio: null,
-
-  createAudio(src, volume, loop = false) {
-    const audio = new Audio(src);
-    audio.volume = volume;
-    audio.loop = loop;
-    audio.preload = "none";
-    return audio;
-  },
-
-  playMusic(name) {
-    if (this.muted || !this.tracks[name]) return;
-
-    if (this.musicAudio) {
-      this.musicAudio.pause();
-    }
-
-    const audio = this.createAudio(
-      this.tracks[name],
-      this.volumes.music,
-      true
-    );
-
-    this.musicAudio = audio;
-    audio.play().catch(() => {
-      Core.notify("Tap the Sound button to enable audio.");
-    });
-  },
-
-  playAmbience(name) {
-    if (this.muted || !this.ambienceTracks[name]) return;
-
-    if (this.ambienceAudio) {
-      this.ambienceAudio.pause();
-    }
-
-    const audio = this.createAudio(
-      this.ambienceTracks[name],
-      this.volumes.ambience,
-      true
-    );
-
-    this.ambienceAudio = audio;
-    audio.play().catch(() => {});
-  },
-
-  playSFX(name) {
-    if (this.muted || !this.effects[name]) return;
-
-    const audio = this.createAudio(
-      this.effects[name],
-      this.volumes.effects
-    );
-
-    audio.play().catch(() => {});
-  },
-
-  changeLocation(location) {
-    const music = location === "apartment"
-      ? "apartment"
-      : location === "cafe"
-        ? "cafe"
-        : location === "lab"
-          ? "mystery"
-          : "city";
-
-    this.playMusic(music);
-    this.playAmbience(location);
-  },
-
-  setMuted(value) {
-    this.muted = !!value;
-
-    if (this.muted) {
-      if (this.musicAudio) this.musicAudio.pause();
-      if (this.ambienceAudio) this.ambienceAudio.pause();
-    } else {
-      this.changeLocation(state.location);
-    }
-
-    MatrixSave.saveSettings();
-  },
-
-  setVolume(type, value) {
-    if (!(type in this.volumes)) return;
-
-    this.volumes[type] = Math.max(
-      0,
-      Math.min(1, Number(value))
-    );
-
-    if (type === "music" && this.musicAudio) {
-      this.musicAudio.volume = this.volumes.music;
-    }
-
-    if (type === "ambience" && this.ambienceAudio) {
-      this.ambienceAudio.volume = this.volumes.ambience;
-    }
-
-    MatrixSave.saveSettings();
-  },
-
-  renderSettings() {
-    Core.openPanel("SOUND SETTINGS", `
-      <p>Choose the sound levels for your experience.</p>
-
-      <div class="setting-row">
-        <label for="music-volume">Music</label>
-        <input id="music-volume" type="range" min="0" max="1" step=".05" value="${this.volumes.music}">
-      </div>
-
-      <div class="setting-row">
-        <label for="ambience-volume">Ambience</label>
-        <input id="ambience-volume" type="range" min="0" max="1" step=".05" value="${this.volumes.ambience}">
-      </div>
-
-      <div class="setting-row">
-        <label for="effects-volume">Sound effects</label>
-        <input id="effects-volume" type="range" min="0" max="1" step=".05" value="${this.volumes.effects}">
-      </div>
-
-      <div class="setting-row">
-        <span>Mute all sounds</span>
-        <input id="mute-audio" type="checkbox" ${this.muted ? "checked" : ""}>
-      </div>
-
-      <button class="primary-button" id="test-audio">TEST SOUND</button>
-    `);
-
-    $("music-volume").addEventListener("input", e => {
-      this.setVolume("music", e.target.value);
-    });
-
-    $("ambience-volume").addEventListener("input", e => {
-      this.setVolume("ambience", e.target.value);
-    });
-
-    $("effects-volume").addEventListener("input", e => {
-      this.setVolume("effects", e.target.value);
-    });
-
-    $("mute-audio").addEventListener("change", e => {
-      this.setMuted(e.target.checked);
-    });
-
-    $("test-audio").addEventListener("click", () => {
-      this.playSFX("click");
-      if (!this.muted) this.playMusic("main");
-    });
-  }
-};
-
-/* ==========================================
-   7. SAVE AND LOAD SYSTEM
-========================================== */
-
-const MatrixSave = window.MatrixSave = {
-  prefix: "matrix_digital_life_",
-
-  safeRead(key) {
-    try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : null;
-    } catch (error) {
-      console.warn("Could not read save:", error);
-      return null;
-    }
-  },
-
-  safeWrite(key, value) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-      return true;
-    } catch (error) {
-      Core.notify("Save failed. Check your browser storage.");
-      console.error(error);
-      return false;
-    }
-  },
-
-  getData() {
-    return {
-      version: 1,
-      savedAt: new Date().toISOString(),
-      state: JSON.parse(JSON.stringify(state))
-    };
-  },
-
-  validate(data) {
-    return !!(
-      data &&
-      data.state &&
-      typeof data.state === "object" &&
-      typeof data.state.money === "number" &&
-      typeof data.state.location === "string" &&
-      Array.isArray(data.state.inventory)
-    );
-  },
-
-  saveSlot(slot = 1) {
-    slot = Number(slot);
-    if (!Number.isInteger(slot) || slot < 1 || slot > 5) {
-      Core.notify("Choose a save slot from 1 to 5.");
-      return false;
-    }
-
-    const ok = this.safeWrite(
-      this.prefix + "slot_" + slot,
-      this.getData()
-    );
-
-    if (ok) {
-      Core.notify("Game saved in slot " + slot + ".");
-      this.render();
-    }
-
-    return ok;
-  },
-
-  loadSlot(slot = 1) {
-    slot = Number(slot);
-
-    if (!Number.isInteger(slot) || slot < 1 || slot > 5) {
-      return false;
-    }
-
-    const data = this.safeRead(this.prefix + "slot_" + slot);
-
-    if (!this.validate(data)) {
-      Core.notify("This save slot is empty or damaged.");
-      return false;
-    }
-
-    this.restore(data.state);
-    Core.notify("Save slot " + slot + " loaded.");
-    this.render();
-    return true;
-  },
-
-  restore(savedState) {
-    const allowed = [
-      "playerName",
-      "money",
-      "day",
-      "hour",
-      "minute",
-      "location",
-      "inventory",
-      "discovered",
-      "relationships",
-      "storyFlags",
-      "quests",
-      "completedQuests",
-      "storyChapter",
-      "started",
-      "currentCharacter",
-      "dialogueHistory",
-      "visited",
-      "settings"
-    ];
-
-    allowed.forEach(key => {
-      if (Object.prototype.hasOwnProperty.call(savedState, key)) {
-        state[key] = savedState[key];
-      }
-    });
-
-    state.inventory = Array.isArray(state.inventory) ? state.inventory : [];
-    state.discovered = Array.isArray(state.discovered) ? state.discovered : ["apartment"];
-    state.visited = Array.isArray(state.visited) ? state.visited : ["apartment"];
-    state.relationships = state.relationships || { Maya: 0, Leo: 0, Aria: 0 };
-    state.storyFlags = state.storyFlags || {};
-    state.completedQuests = Array.isArray(state.completedQuests) ? state.completedQuests : [];
-
-    Core.updateUI();
-
-    const location = locations[state.location]
-      ? state.location
-      : "apartment";
-
-    state.location = location;
-
-    $("location").textContent = locations[location].name;
-    $("scene-hint").textContent = locations[location].description;
-    $("scene").style.backgroundImage =
-      "linear-gradient(180deg, rgba(8,8,20,.08), rgba(8,8,20,.72)),url('" +
-      locations[location].image + "')";
-
-    renderHotspots();
-    Core.hideCharacter();
-  },
-
-  autosave() {
-    return this.safeWrite(
-      this.prefix + "autosave",
-      this.getData()
-    );
-  },
-
-  loadAutosave() {
-    const data = this.safeRead(this.prefix + "autosave");
-
-    if (!this.validate(data)) return false;
-
-    this.restore(data.state);
-    return true;
-  },
-
-  saveSettings() {
-    return this.safeWrite(this.prefix + "settings", {
-      volumes: MatrixAudio.volumes,
-      muted: MatrixAudio.muted
-    });
-  },
-
-  loadSettings() {
-    const settings = this.safeRead(this.prefix + "settings");
-    if (!settings) return;
-
-    if (settings.volumes) {
-      Object.keys(MatrixAudio.volumes).forEach(key => {
-        if (typeof settings.volumes[key] === "number") {
-          MatrixAudio.volumes[key] = Math.max(
-            0,
-            Math.min(1, settings.volumes[key])
-          );
-        }
-      });
-    }
-
-    MatrixAudio.muted = !!settings.muted;
-  },
-
-  deleteSlot(slot) {
-    if (!confirm("Delete save slot " + slot + "?")) return;
-
-    localStorage.removeItem(this.prefix + "slot_" + slot);
-    Core.notify("Save slot deleted.");
-    this.render();
-  },
-
-  render() {
-    let html = `
-      <p>Save your progress or load an earlier journey.</p>
-    `;
-
-    for (let slot = 1; slot <= 5; slot++) {
-      const data = this.safeRead(this.prefix + "slot_" + slot);
-      const valid = this.validate(data);
-
-      const details = valid
-        ? "Day " + (data.state.day || 1) +
-          " · " + escapeHTML(data.state.location) +
-          " · " + new Date(data.savedAt).toLocaleString()
-        : "Empty slot";
-
-      html += `
-        <div class="save-slot">
-          <div class="save-slot-info">
-            <strong>SAVE SLOT ${slot}</strong>
-            <small>${details}</small>
-          </div>
-          <div class="save-slot-actions">
-            <button class="primary-button" data-save="${slot}">SAVE</button>
-            <button class="secondary-button" data-load="${slot}" ${valid ? "" : "disabled"}>LOAD</button>
-            <button class="secondary-button" data-delete="${slot}" ${valid ? "" : "disabled"}>DELETE</button>
-          </div>
-        </div>
-      `;
-    }
-
-    html += `
-      <button class="secondary-button" id="manual-autosave">
-        UPDATE AUTOSAVE
-      </button>
-      <button class="secondary-button" id="export-save">
-        EXPORT BACKUP
-      </button>
-      <button class="secondary-button" id="import-save">
-        IMPORT BACKUP
-      </button>
-      <input id="import-save-file" type="file" accept=".json,application/json" hidden>
-    `;
-
-    Core.openPanel("SAVE & LOAD", html);
-
-    $("panel-content").addEventListener("click", event => {
-      const save = event.target.closest("[data-save]");
-      const load = event.target.closest("[data-load]");
-      const del = event.target.closest("[data-delete]");
-
-      if (save) this.saveSlot(Number(save.dataset.save));
-      if (load) this.loadSlot(Number(load.dataset.load));
-      if (del) this.deleteSlot(Number(del.dataset.delete));
-
-      if (event.target.id === "manual-autosave") {
-        this.autosave();
-        Core.notify("Autosave updated.");
-      }
-
-      if (event.target.id === "export-save") {
-        this.exportBackup();
-      }
-
-      if (event.target.id === "import-save") {
-        $("import-save-file").click();
-      }
-    });
-
-    $("import-save-file").addEventListener("change", event => {
-      this.importBackup(event.target.files[0]);
-    });
-  },
-
-  exportBackup() {
-    const backup = {
-      autosave: this.safeRead(this.prefix + "autosave"),
-      slots: {}
-    };
-
-    for (let i = 1; i <= 5; i++) {
-      backup.slots[i] = this.safeRead(this.prefix + "slot_" + i);
-    }
-
-    const blob = new Blob(
-      [JSON.stringify(backup, null, 2)],
-      { type: "application/json" }
-    );
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "matrix-digital-life-backup.json";
-    link.click();
-
-    URL.revokeObjectURL(url);
-    Core.notify("Backup exported.");
-  },
-
-  async importBackup(file) {
-    if (!file) return;
-
-    try {
-      const backup = JSON.parse(await file.text());
-
-      const validSlots = {};
-
-      if (backup.autosave && !this.validate(backup.autosave)) {
-        throw new Error("Invalid autosave data.");
-      }
-
-      for (let i = 1; i <= 5; i++) {
-        const item = backup.slots && backup.slots[i];
-
-        if (item && !this.validate(item)) {
-          throw new Error("Invalid save slot " + i);
-        }
-
-        if (item) validSlots[i] = item;
-      }
-
-      if (!confirm("Import this backup? Existing saves may be overwritten.")) {
-        return;
-      }
-
-      if (backup.autosave) {
-        if (!this.safeWrite(this.prefix + "autosave", backup.autosave)) {
-          throw new Error("Could not import autosave.");
-        }
-      }
-
-      for (const [slot, data] of Object.entries(validSlots)) {
-        if (!this.safeWrite(this.prefix + "slot_" + slot, data)) {
-          throw new Error("Could not import slot " + slot);
-        }
-      }
-
-      Core.notify("Backup imported.");
-      this.render();
-
-    } catch (error) {
-      Core.notify("Could not import backup: " + error.message);
-    }
-  }
-};
-
-/* ==========================================
-   8. LOAD SETTINGS
-========================================== */
-
-MatrixSave.loadSettings();
-
-/* ==========================================
-   9. AUTOMATIC SAVE
-========================================== */
-
-let autosaveTimer = null;
-
-function startAutosave() {
-  if (autosaveTimer) clearInterval(autosaveTimer);
-
-  autosaveTimer = setInterval(() => {
-    if (state.started) {
-      MatrixSave.autosave();
-    }
-  }, 60000);
+function closeImage() {
+    document.getElementById("lightbox").classList.remove("active");
+    document.body.style.overflow = "";
 }
 
-startAutosave();
+function changeImage(direction) {
+    currentImage =
+        (currentImage + direction + photos.length) % photos.length;
 
-window.addEventListener("pagehide", () => {
-  if (state.started) MatrixSave.autosave();
-  MatrixSave.saveSettings();
+    document.getElementById("lightboxImg").src =
+        photos[currentImage];
+}
+
+// Keyboard navigation
+
+document.addEventListener("keydown", (e) => {
+    const lightbox = document.getElementById("lightbox");
+
+    if (!lightbox.classList.contains("active")) return;
+
+    if (e.key === "Escape") closeImage();
+    if (e.key === "ArrowRight") changeImage(1);
+    if (e.key === "ArrowLeft") changeImage(-1);
 });
 
-/* ==========================================
-   10. AUDIO LOCATION CONNECTION
-========================================== */
+// Click outside image to close
 
-const originalGoTo = Core.goTo;
-
-Core.goTo = function(location) {
-  const result = originalGoTo(location);
-
-  if (result) {
-    MatrixAudio.changeLocation(location);
-  }
-
-  return result;
-};
-
-/* ==========================================
-   11. SYSTEM DIAGNOSTICS
-========================================== */
-
-const MatrixFinal = window.MatrixFinal = {
-  version: "2.0.0",
-
-  checkSystems() {
-    const systems = [
-      "MatrixCore",
-      "MatrixCinema",
-      "MatrixAudio",
-      "MatrixSave"
-    ];
-
-    return systems.map(name => ({
-      name,
-      available: !!window[name]
-    }));
-  },
-
-  health() {
-    const report = this.checkSystems();
-    const available = report.filter(item => item.available).length;
-
-    const html = `
-      <h3>MATRIX SYSTEM STATUS</h3>
-      <p>${available} / ${report.length} systems online.</p>
-      ${report.map(item => `
-        <div class="setting-row">
-          <span>${item.name}</span>
-          <strong style="color:${item.available ? 'var(--green)' : 'var(--danger)'}">
-            ${item.available ? "ONLINE" : "MISSING"}
-          </strong>
-        </div>
-      `).join("")}
-      <p class="dialogue-note">MATRIX DIGITAL LIFE ${this.version}</p>
-    `;
-
-    Core.openPanel("SYSTEM DIAGNOSTICS", html);
-    return report;
-  }
-};
-
-/* ==========================================
-   12. DIAGNOSTICS BUTTON
-========================================== */
-
-const diagnosticButton = document.createElement("button");
-diagnosticButton.className = "nav-button";
-diagnosticButton.textContent = "SYSTEM";
-diagnosticButton.addEventListener("click", () => {
-  MatrixFinal.health();
+document.getElementById("lightbox").addEventListener("click", (e) => {
+    if (e.target.id === "lightbox") closeImage();
 });
 
-document.querySelector(".navigation").appendChild(diagnosticButton);
+// SCROLL ANIMATIONS
 
-/* ==========================================
-   13. INITIALIZATION
-========================================== */
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+}, { threshold: 0.12 });
 
-Core.updateUI();
-MatrixSave.loadSettings();
+document.querySelectorAll(".reveal").forEach(el => {
+    observer.observe(el);
+});
 
-console.log("%c MATRIX DIGITAL LIFE ", "background:#7d4bc2;color:white;padding:8px;font-weight:bold");
-console.table(MatrixFinal.checkSystems());
-console.log("All three code parts have loaded.");
-
-})();
 </script>
 
-<!-- END OF MATRIX DIGITAL LIFE -->
 </body>
 </html>
