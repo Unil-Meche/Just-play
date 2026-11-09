@@ -4,720 +4,453 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VICE CITY | THE COLLECTION</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>Cozy Vibes ☁️</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --pink: #ff3185;
-    --orange: #ff7545;
-    --dark: #09090d;
-}
-
-html {
-    scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background: var(--dark);
-    color: white;
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
+  background: #171411;
+  color: #f5eadd;
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
 }
 
-/* NAVIGATION */
-
-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-    padding: 22px 6%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
-    backdrop-filter: blur(5px);
+header {
+  padding: 25px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ffffff12;
 }
 
 .logo {
-    font-family: 'Anton', sans-serif;
-    font-size: 27px;
-    letter-spacing: 3px;
-    color: var(--pink);
+  font-family: 'Playfair Display', serif;
+  font-size: 27px;
+  color: #e9c49e;
 }
 
 nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 25px;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    transition: .3s;
+  color: #c7b9a8;
+  text-decoration: none;
+  margin-left: 25px;
+  font-size: 14px;
 }
 
 nav a:hover {
-    color: var(--pink);
+  color: white;
 }
-
-/* HERO */
 
 .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 120px 8% 70px;
-    position: relative;
-    overflow: hidden;
-    background:
-      linear-gradient(90deg, rgba(5,5,10,.95), rgba(5,5,10,.5), rgba(5,5,10,.15)),
-      linear-gradient(0deg, var(--dark), transparent 45%),
-      url('1000008504.jpg') center/cover no-repeat;
+  padding: 90px 8% 65px;
+  background:
+    linear-gradient(90deg, #171411 15%, #171411bb 65%, #17141166),
+    url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1600')
+    center/cover;
 }
 
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,49,133,.12), transparent 50%);
-    pointer-events: none;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 850px;
-}
-
-.hero-tag {
-    color: var(--pink);
-    letter-spacing: 7px;
-    font-size: 12px;
-    font-weight: 900;
-    margin-bottom: 25px;
+.hero small {
+  color: #d6aa7b;
+  letter-spacing: 4px;
 }
 
 .hero h1 {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(75px, 14vw, 175px);
-    line-height: .85;
-    letter-spacing: -3px;
-    text-transform: uppercase;
-}
-
-.hero h1 span {
-    display: block;
-    color: transparent;
-    -webkit-text-stroke: 2px white;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(45px, 7vw, 80px);
+  margin: 20px 0;
+  line-height: 1.1;
 }
 
 .hero p {
-    margin-top: 30px;
-    max-width: 460px;
-    color: #ccc;
-    line-height: 1.9;
-    font-size: 14px;
+  color: #c9b9a7;
+  max-width: 430px;
+  line-height: 1.8;
 }
 
-.hero-btn {
-    display: inline-block;
-    margin-top: 35px;
-    padding: 17px 35px;
-    background: linear-gradient(100deg, var(--pink), var(--orange));
-    color: white;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-decoration: none;
-    font-size: 11px;
-    transition: .3s;
+.hero button {
+  margin-top: 30px;
+  padding: 14px 28px;
+  background: #c79b70;
+  border: none;
+  border-radius: 30px;
+  color: #211810;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.hero-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 35px rgba(255,49,133,.4);
-}
-
-/* INTRO */
-
-.intro {
-    padding: 90px 8% 50px;
-}
-
-.eyebrow {
-    color: var(--pink);
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 5px;
-    margin-bottom: 15px;
+section {
+  padding: 45px 8%;
 }
 
 .section-title {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(42px, 7vw, 85px);
-    line-height: 1;
-    text-transform: uppercase;
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  margin-bottom: 25px;
 }
 
-.section-title span {
-    color: var(--orange);
+.playlists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 20px;
 }
 
-.intro p {
-    margin-top: 20px;
-    color: #999;
-    font-size: 13px;
-    line-height: 1.9;
-    max-width: 600px;
+.card {
+  background: #25201b;
+  padding: 14px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: .3s;
 }
 
-/* GALLERY SECTIONS */
-
-.gallery-section {
-    padding: 55px 0 65px;
+.card:hover {
+  transform: translateY(-7px);
+  background: #332920;
 }
 
-.gallery-heading {
-    padding: 0 8%;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
+.card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
-.gallery-heading h2 {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(32px, 5vw, 55px);
-    text-transform: uppercase;
+.card h3 {
+  margin-top: 13px;
+  font-size: 16px;
 }
 
-.gallery-heading p {
-    color: #888;
-    font-size: 10px;
-    letter-spacing: 3px;
+.card p {
+  color: #a99a88;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
-.gallery {
-    display: flex;
-    overflow-x: auto;
-    gap: 18px;
-    padding: 15px 8% 35px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
-    scrollbar-color: var(--pink) #17171d;
+.songs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.gallery::-webkit-scrollbar {
-    height: 5px;
+.song {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #25201b;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
-.gallery::-webkit-scrollbar-thumb {
-    background: var(--pink);
-    border-radius: 20px;
+.song:hover {
+  background: #382c21;
 }
 
-.photo {
-    flex: 0 0 390px;
-    height: 490px;
-    position: relative;
-    overflow: hidden;
-    scroll-snap-align: center;
-    cursor: pointer;
-    background: #17171d;
-    border: 1px solid #26232c;
-    transition: .4s;
+.song img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
-.photo:hover {
-    transform: translateY(-10px);
-    border-color: var(--pink);
+.song-info {
+  flex: 1;
 }
 
-.photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform .8s;
+.song-info p {
+  color: #a99a88;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
-.photo:hover img {
-    transform: scale(1.09);
+.play {
+  color: #dfb58c;
+  font-size: 20px;
 }
 
-.photo::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(transparent 45%, rgba(0,0,0,.85));
-    pointer-events: none;
+.player {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #211c18ee;
+  backdrop-filter: blur(15px);
+  border-top: 1px solid #ffffff18;
+  padding: 15px 7%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.photo-info {
-    position: absolute;
-    z-index: 2;
-    bottom: 25px;
-    left: 25px;
-    right: 20px;
+.player img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
-.photo-info small {
-    color: var(--pink);
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 3px;
+.current {
+  min-width: 120px;
+  flex: 1;
 }
 
-.photo-info h3 {
-    font-family: 'Anton', sans-serif;
-    font-size: 30px;
-    text-transform: uppercase;
-    margin-top: 7px;
+.current p {
+  font-size: 12px;
+  color: #b5a494;
+  margin-top: 4px;
 }
 
-/* FEATURED IMAGE */
-
-.featured {
-    padding: 75px 8%;
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 
-.featured-image {
-    width: 100%;
-    height: min(75vh, 750px);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
+.controls button {
+  background: none;
+  color: #f5eadd;
+  border: none;
+  font-size: 23px;
+  cursor: pointer;
 }
 
-.featured-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: .8s;
+.controls .main {
+  background: #d4aa80;
+  color: #211810;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
 }
 
-.featured-image:hover img {
-    transform: scale(1.04);
+.progress {
+  flex: 1;
+  max-width: 250px;
 }
 
-.featured-image::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(0deg, rgba(0,0,0,.8), transparent 65%);
-    pointer-events: none;
+input[type="range"] {
+  width: 100%;
+  accent-color: #d4aa80;
+  cursor: pointer;
 }
-
-.featured-text {
-    position: absolute;
-    z-index: 2;
-    bottom: 45px;
-    left: 45px;
-}
-
-.featured-text h2 {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(45px, 8vw, 100px);
-    text-transform: uppercase;
-}
-
-/* IMAGE LIGHTBOX */
-
-.lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    background: rgba(0,0,0,.96);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-}
-
-.lightbox.active {
-    display: flex;
-}
-
-.lightbox img {
-    max-width: 95%;
-    max-height: 85vh;
-    object-fit: contain;
-    box-shadow: 0 0 50px rgba(255,49,133,.15);
-}
-
-.close {
-    position: absolute;
-    top: 25px;
-    right: 35px;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 5;
-}
-
-.close:hover {
-    color: var(--pink);
-}
-
-.lightbox-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,49,133,.8);
-    color: white;
-    border: 0;
-    font-size: 27px;
-    padding: 12px 20px;
-    cursor: pointer;
-}
-
-.prev { left: 15px; }
-.next { right: 15px; }
-
-/* FOOTER */
 
 footer {
-    text-align: center;
-    padding: 80px 20px;
-    background: #050508;
-    border-top: 1px solid #25202a;
+  padding: 60px 20px 120px;
+  text-align: center;
+  color: #9e8c7a;
+  font-size: 13px;
 }
 
-footer h2 {
-    font-family: 'Anton', sans-serif;
-    font-size: 55px;
-    color: var(--pink);
-    letter-spacing: 4px;
-}
-
-footer p {
-    color: #777;
-    font-size: 11px;
-    letter-spacing: 3px;
-    margin-top: 15px;
-}
-
-footer .copyright {
-    margin-top: 40px;
-    color: #444;
-    font-size: 10px;
-}
-
-/* ANIMATION */
-
-.reveal {
-    opacity: 0;
-    transform: translateY(35px);
-    transition: .8s ease;
-}
-
-.reveal.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* MOBILE */
-
-@media(max-width: 650px) {
-    nav {
-        padding: 18px 5%;
-    }
-
-    .logo {
-        font-size: 20px;
-    }
-
-    nav a {
-        font-size: 9px;
-        margin-left: 10px;
-    }
-
-    .hero {
-        min-height: 90vh;
-        padding-left: 7%;
-    }
-
-    .photo {
-        flex-basis: 82vw;
-        height: 420px;
-    }
-
-    .gallery-heading {
-        padding: 0 6%;
-    }
-
-    .gallery {
-        padding-left: 6%;
-    }
-
-    .featured {
-        padding: 45px 6%;
-    }
-
-    .featured-image {
-        height: 420px;
-    }
-
-    .featured-text {
-        left: 20px;
-        bottom: 25px;
-    }
-
-    .lightbox-arrow {
-        font-size: 18px;
-        padding: 10px 13px;
-    }
+@media(max-width:600px) {
+  nav a { margin-left: 10px; font-size: 12px; }
+  .hero { padding-top: 65px; }
+  .player { gap: 10px; padding: 12px; }
+  .progress { display: none; }
+  .current { min-width: 80px; }
+  .controls { gap: 10px; }
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-    <div class="logo">VICE CITY®</div>
-    <div>
-        <a href="#home">HOME</a>
-        <a href="#gallery">GALLERY</a>
-        <a href="#featured">FEATURED</a>
-    </div>
-</nav>
+<header>
+  <div class="logo">☁ Cozy Vibes</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#playlists">Playlists</a>
+    <a href="#music">Music</a>
+  </nav>
+</header>
 
-<!-- HERO -->
-
-<section class="hero" id="home">
-    <div class="hero-content">
-        <div class="hero-tag">WELCOME TO THE COLLECTION</div>
-        <h1>
-            THE<br>
-            <span>VICE</span>
-            CITY
-        </h1>
-        <p>
-            A world of unforgettable moments.
-            Explore the collection through a cinematic
-            experience inspired by the neon nights,
-            luxury lifestyle and atmosphere of Vice City.
-        </p>
-        <a href="#gallery" class="hero-btn">EXPLORE THE WORLD ↗</a>
-    </div>
-</section>
-
-<!-- INTRO -->
-
-<section class="intro reveal" id="gallery">
-    <div class="eyebrow">01 — THE COLLECTION</div>
-    <h2 class="section-title">BEYOND THE <span>ORDINARY.</span></h2>
-    <p>
-        Every frame tells a story. Scroll through the
-        collection and discover every moment in full detail.
-    </p>
-</section>
-
-<!-- MAIN GALLERY -->
-
-<section class="gallery-section">
-    <div class="gallery-heading">
-        <div>
-            <div class="eyebrow">THE PHOTO ARCHIVE</div>
-            <h2>VISUAL STORIES.</h2>
-        </div>
-        <p>DRAG TO EXPLORE →</p>
-    </div>
-
-    <div class="gallery" id="gallery1"></div>
-</section>
-
-<!-- FEATURED -->
-
-<section class="featured reveal" id="featured">
-    <div class="eyebrow">02 — SELECTED MOMENT</div>
-    <div class="featured-image" onclick="openImage(15)">
-        <img src="1000008444.jpg" alt="Featured photograph">
-        <div class="featured-text">
-            <div class="eyebrow">THE ART OF THE MOMENT</div>
-            <h2>PURE CINEMA.</h2>
-        </div>
-    </div>
-</section>
-
-<!-- SECOND GALLERY -->
-
-<section class="gallery-section">
-    <div class="gallery-heading">
-        <div>
-            <div class="eyebrow">THE NEXT CHAPTER</div>
-            <h2>THE EXPERIENCE.</h2>
-        </div>
-        <p>39 MOMENTS — ONE WORLD</p>
-    </div>
-
-    <div class="gallery" id="gallery2"></div>
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-    <h2>VICE CITY</h2>
-    <p>LIVE THE MOMENT. OWN THE NIGHT.</p>
-    <div class="copyright">
-        © 2026 — PERSONAL PHOTO COLLECTION
-        <br><br>
-        FAN-MADE DESIGN • NOT AN OFFICIAL ROCKSTAR GAMES WEBSITE
-    </div>
-</footer>
-
-<!-- FULLSCREEN VIEWER -->
-
-<div class="lightbox" id="lightbox">
-    <span class="close" onclick="closeImage()">×</span>
-    <button class="lightbox-arrow prev" onclick="changeImage(-1)">❮</button>
-    <img id="lightboxImg" src="" alt="Fullscreen photograph">
-    <button class="lightbox-arrow next" onclick="changeImage(1)">❯</button>
+<div class="hero" id="home">
+  <small>YOUR LITTLE ESCAPE</small>
+  <h1>Slow down.<br>Feel everything.</h1>
+  <p>
+    A little music, a little rain, and a whole lot of peace.
+    Welcome to your cozy corner of the world.
+  </p>
+  <button onclick="playSong(0)">♫ Start listening</button>
 </div>
 
+<section id="playlists">
+  <h2 class="section-title">Made for your mood ☕</h2>
+
+  <div class="playlists">
+    <div class="card" onclick="filterMood('lofi')">
+      <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=400">
+      <h3>Rainy Nights</h3>
+      <p>Lo-fi & peaceful beats</p>
+    </div>
+
+    <div class="card" onclick="filterMood('love')">
+      <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400">
+      <h3>Soft Love</h3>
+      <p>Love songs & feelings</p>
+    </div>
+
+    <div class="card" onclick="filterMood('indie')">
+      <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400">
+      <h3>Indie Dreams</h3>
+      <p>Indie & alternative</p>
+    </div>
+
+    <div class="card" onclick="filterMood('jazz')">
+      <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400">
+      <h3>Midnight Jazz</h3>
+      <p>Jazz & coffee vibes</p>
+    </div>
+  </div>
+</section>
+
+<section id="music">
+  <h2 class="section-title">Your soundtrack 🎧</h2>
+  <div class="songs" id="songList"></div>
+</section>
+
+<footer>
+  Made with ♡ for your peaceful little moments.<br>
+  Stay cozy. Stay dreamy.
+</footer>
+
+<div class="player">
+  <img id="cover" src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=200">
+
+  <div class="current">
+    <strong id="songName">Choose a song</strong>
+    <p id="artist">Cozy Vibes ☁</p>
+  </div>
+
+  <div class="controls">
+    <button onclick="previousSong()">⏮</button>
+    <button class="main" id="playBtn" onclick="togglePlay()">▶</button>
+    <button onclick="nextSong()">⏭</button>
+  </div>
+
+  <div class="progress">
+    <input id="volume" type="range" min="0" max="1" step="0.01" value="0.7">
+  </div>
+</div>
+
+<audio id="audio"></audio>
+
 <script>
-
-// ALL 39 PHOTOS
-
-const photos = [
-"1000008504.jpg",
-"1000008503.jpg",
-"1000008502.jpg",
-"1000008501.jpg",
-"1000008500.jpg",
-"1000008499.jpg",
-"1000008496.jpg",
-"1000008495.jpg",
-"1000008494.jpg",
-"1000008493.jpg",
-"1000008497.jpg",
-"1000008447.jpg",
-"1000008446.jpg",
-"1000008445.jpg",
-"1000008444.jpg",
-"1000008443.jpg",
-"1000008442.jpg",
-"1000008441.jpg",
-"1000008439.jpg",
-"1000008427.jpg",
-"1000008425.jpg",
-"1000008424.jpg",
-"1000008423.jpg",
-"1000008422.jpg",
-"1000008421.jpg",
-"1000008489.jpg",
-"1000008488.jpg",
-"1000008528.jpg",
-"1000008531.jpg",
-"1000008536.jpg",
-"1000008512.jpg",
-"1000008530.jpg",
-"1000008426.jpg",
-"1000008440.jpg",
-"1000008460.jpg",
-"1000008461.jpg",
-"1000008526.jpg",
-"1000008534.jpg",
-"1000008537.jpg"
+const songs = [
+  {
+    name: "Rainy Mood",
+    artist: "Lo-fi",
+    mood: "lofi",
+    cover: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=300",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+  },
+  {
+    name: "Dreamy Feelings",
+    artist: "Soft Vibes",
+    mood: "love",
+    cover: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+  },
+  {
+    name: "Golden Hour",
+    artist: "Indie Mood",
+    mood: "indie",
+    cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+  },
+  {
+    name: "Midnight Cafe",
+    artist: "Jazz Mood",
+    mood: "jazz",
+    cover: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=300",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+  }
 ];
 
-// Generate photo cards
+let current = 0;
+let filteredSongs = [...songs];
 
-function createGallery(id, start, end) {
-    const gallery = document.getElementById(id);
+const audio = document.getElementById("audio");
 
-    photos.slice(start, end).forEach((photo, index) => {
-        const realIndex = start + index;
-
-        const card = document.createElement("div");
-        card.className = "photo";
-
-        card.innerHTML = `
-            <img src="${photo}" loading="lazy"
-                 alt="Photo ${realIndex + 1}">
-            <div class="photo-info">
-                <small>FRAME ${String(realIndex + 1).padStart(2, '0')}</small>
-                <h3>THE COLLECTION</h3>
-            </div>
-        `;
-
-        card.onclick = () => openImage(realIndex);
-
-        gallery.appendChild(card);
-    });
+function renderSongs() {
+  document.getElementById("songList").innerHTML =
+    filteredSongs.map(song => `
+      <div class="song" onclick="playSong(${songs.indexOf(song)})">
+        <img src="${song.cover}">
+        <div class="song-info">
+          <strong>${song.name}</strong>
+          <p>${song.artist}</p>
+        </div>
+        <span class="play">▶</span>
+      </div>
+    `).join("");
 }
 
-// Split all images into two scrollable galleries
+function playSong(index) {
+  current = index;
+  const song = songs[current];
 
-createGallery("gallery1", 0, 20);
-createGallery("gallery2", 20, 39);
+  audio.src = song.url;
+  audio.play().catch(() => {
+    alert("Tap play again or check your internet connection.");
+  });
 
-// FULLSCREEN IMAGE VIEWER
-
-let currentImage = 0;
-
-function openImage(index) {
-    currentImage = index;
-
-    document.getElementById("lightboxImg").src =
-        photos[currentImage];
-
-    document.getElementById("lightbox").classList.add("active");
-
-    document.body.style.overflow = "hidden";
+  document.getElementById("songName").textContent = song.name;
+  document.getElementById("artist").textContent = song.artist;
+  document.getElementById("cover").src = song.cover;
+  document.getElementById("playBtn").textContent = "Ⅱ";
 }
 
-function closeImage() {
-    document.getElementById("lightbox").classList.remove("active");
-    document.body.style.overflow = "";
+function togglePlay() {
+  if (!audio.src) {
+    playSong(0);
+    return;
+  }
+
+  if (audio.paused) {
+    audio.play();
+    document.getElementById("playBtn").textContent = "Ⅱ";
+  } else {
+    audio.pause();
+    document.getElementById("playBtn").textContent = "▶";
+  }
 }
 
-function changeImage(direction) {
-    currentImage =
-        (currentImage + direction + photos.length) % photos.length;
-
-    document.getElementById("lightboxImg").src =
-        photos[currentImage];
+function nextSong() {
+  playSong((current + 1) % songs.length);
 }
 
-// Keyboard navigation
+function previousSong() {
+  playSong((current - 1 + songs.length) % songs.length);
+}
 
-document.addEventListener("keydown", (e) => {
-    const lightbox = document.getElementById("lightbox");
+function filterMood(mood) {
+  filteredSongs = songs.filter(song => song.mood === mood);
+  renderSongs();
+  document.getElementById("music").scrollIntoView({
+    behavior: "smooth"
+  });
+}
 
-    if (!lightbox.classList.contains("active")) return;
+audio.addEventListener("ended", nextSong);
 
-    if (e.key === "Escape") closeImage();
-    if (e.key === "ArrowRight") changeImage(1);
-    if (e.key === "ArrowLeft") changeImage(-1);
+audio.addEventListener("play", () => {
+  document.getElementById("playBtn").textContent = "Ⅱ";
 });
 
-// Click outside image to close
-
-document.getElementById("lightbox").addEventListener("click", (e) => {
-    if (e.target.id === "lightbox") closeImage();
+audio.addEventListener("pause", () => {
+  document.getElementById("playBtn").textContent = "▶";
 });
 
-// SCROLL ANIMATIONS
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-        }
-    });
-}, { threshold: 0.12 });
-
-document.querySelectorAll(".reveal").forEach(el => {
-    observer.observe(el);
+document.getElementById("volume").addEventListener("input", e => {
+  audio.volume = e.target.value;
 });
 
+audio.volume = 0.7;
+
+renderSongs();
 </script>
 
 </body>
