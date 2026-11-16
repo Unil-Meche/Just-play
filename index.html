@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Korean Vocabulary Studio</title>
 <link rel="stylesheet" href="style.css">
-
+  <style> 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
 
 :root {
@@ -566,6 +566,7 @@ footer {
     flex-direction: column;
   }
 }
+</style>
 </head>
 <body>
 
@@ -792,9 +793,9 @@ footer {
 
 </main>
 
-<script src="script.js"></script>
+<script src="script.js">
   
-  const STORAGE_KEY = "koreanVocabularyStudio.v1";
+const STORAGE_KEY = "koreanVocabularyStudio.v1";
 
 let words = loadWords();
 let currentIndex = 0;
@@ -1242,6 +1243,6 @@ document.addEventListener("keydown", event => {
 
 // Start application
 render();
-
-</body>   
+</script>
+</body>
 </html>
