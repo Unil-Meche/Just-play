@@ -1,1248 +1,619 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Korean Vocabulary Studio</title>
-<link rel="stylesheet" href="style.css">
-  <style> 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
-
-:root {
-  --ink: #172033;
-  --muted: #718096;
-  --line: #e8edf4;
-  --paper: #ffffff;
-  --bg: #f5f7fb;
-  --blue: #4f6bed;
-  --blue-dark: #3854d8;
-  --soft: #eef2ff;
-  --shadow: 0 12px 34px rgba(35,48,80,.06);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'DM Sans', 'Noto Sans Devanagari', sans-serif;
-}
-
-.app-shell {
-  max-width: 1180px;
-  margin: auto;
-  padding: 42px 28px 24px;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 28px;
-}
-
-.eyebrow {
-  font-size: 10px;
-  letter-spacing: 1.7px;
-  font-weight: 700;
-  color: var(--blue);
-  margin: 0 0 8px;
-}
-
-.topbar h1 {
-  font-size: 30px;
-  letter-spacing: -1px;
-  margin: 0;
-}
-
-.topbar h1 span {
-  color: var(--blue);
-}
-
-.subtitle {
-  color: var(--muted);
-  margin: 8px 0 0;
-  font-size: 14px;
-}
-
-.top-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.btn {
-  border: 0;
-  border-radius: 11px;
-  padding: 12px 17px;
-  font: 600 13px 'DM Sans', sans-serif;
-  cursor: pointer;
-  transition: .18s;
-}
-
-.btn:hover,
-.audio-btn:hover {
-  transform: translateY(-1px);
-}
-
-.btn-primary {
-  background: var(--blue);
-  color: white;
-  box-shadow: 0 5px 14px #4f6bed30;
-}
-
-.btn-primary:hover {
-  background: var(--blue-dark);
-}
-
-.btn-light {
-  background: white;
-  color: #39445a;
-  border: 1px solid var(--line);
-}
-
-.panel {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 22px;
-  box-shadow: var(--shadow);
-}
-
-.visibility-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 22px;
-}
-
-.visibility-panel h2,
-.section-heading h2,
-.tips-panel h2 {
-  font-size: 16px;
-  margin: 0;
-}
-
-.muted {
-  color: var(--muted);
-  font-size: 12px;
-  margin: 6px 0 0;
-}
-
-.toggle-row {
-  display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-
-.switch-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.switch-label input {
-  position: absolute;
-  opacity: 0;
-}
-
-.switch {
-  width: 34px;
-  height: 19px;
-  border-radius: 20px;
-  background: #d9dfeb;
-  position: relative;
-  transition: .2s;
-}
-
-.switch:after {
-  content: "";
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  left: 3px;
-  top: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: .2s;
-}
-
-.switch-label input:checked + .switch {
-  background: var(--blue);
-}
-
-.switch-label input:checked + .switch:after {
-  transform: translateX(15px);
-}
-
-.workspace {
-  display: grid;
-  grid-template-columns: minmax(0,1.65fr) minmax(290px,.85fr);
-  gap: 22px;
-  align-items: start;
-}
-
-.main-column,
-.side-column {
-  display: grid;
-  gap: 22px;
-}
-
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.count-pill {
-  font-size: 11px;
-  color: #52617b;
-  background: #f1f4f9;
-  padding: 7px 10px;
-  border-radius: 20px;
-}
-
-.progress-track {
-  height: 5px;
-  background: #edf0f6;
-  border-radius: 10px;
-  margin: 19px 0 22px;
-  overflow: hidden;
-}
-
-.progress-track div {
-  height: 100%;
-  width: 0;
-  background: var(--blue);
-  border-radius: 10px;
-  transition: width .25s;
-}
-
-.flashcard {
-  min-height: 260px;
-  border: 1px solid #e9edfa;
-  border-radius: 15px;
-  background: linear-gradient(145deg,#fbfcff,#f7f8ff);
-  padding: 28px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 24px;
-  text-align: center;
-}
-
-.language-tag {
-  font-size: 9px;
-  letter-spacing: 1.4px;
-  font-weight: 700;
-  color: #8994aa;
-}
-
-.word {
-  margin-top: 9px;
-  overflow-wrap: anywhere;
-}
-
-.korean-word {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(30px,5vw,48px);
-  font-weight: 600;
-  color: #25345b;
-}
-
-.meaning-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
-.meaning-block {
-  padding: 15px 10px;
-  border-radius: 12px;
-  background: white;
-  border: 1px solid #edf0f6;
-}
-
-.meaning-word {
-  font-size: 19px;
-  font-weight: 600;
-  color: #29344b;
-}
-
-.nepali-word {
-  font-family: 'Noto Sans Devanagari', sans-serif;
-}
-
-.word-image-wrap {
-  max-height: 150px;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.word-image-wrap img {
-  max-width: 100%;
-  max-height: 150px;
-  object-fit: contain;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.empty-state {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.audio-row {
-  display: flex;
-  gap: 9px;
-  margin-top: 16px;
-}
-
-.audio-btn {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
-  padding: 12px 8px;
-  border: 1px solid var(--line);
-  background: white;
-  border-radius: 11px;
-  color: #4b5870;
-  font-size: 11px;
-  cursor: pointer;
-  transition: .18s;
-}
-
-.audio-all {
-  background: var(--soft);
-  border-color: #dfe5ff;
-  color: var(--blue);
-}
-
-.study-controls {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 17px;
-}
-
-.next-btn {
-  min-width: 145px;
-}
-
-.search-input,
-.stack-form input,
-textarea {
-  font: inherit;
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  outline: none;
-  font-size: 12px;
-}
-
-.search-input {
-  margin: 17px 0 10px;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #aab7ff;
-  box-shadow: 0 0 0 3px #4f6bed12;
-}
-
-.vocab-list {
-  display: grid;
-  gap: 7px;
-  max-height: 290px;
-  overflow: auto;
-}
-
-.vocab-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 11px 12px;
-  border: 1px solid #eff1f6;
-  border-radius: 10px;
-}
-
-.vocab-item.active {
-  background: #f4f6ff;
-  border-color: #dce3ff;
-}
-
-.vocab-summary {
-  min-width: 0;
-  cursor: pointer;
-}
-
-.vocab-summary strong {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px;
-}
-
-.vocab-summary small {
-  display: block;
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 3px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.item-actions {
-  display: flex;
-  gap: 5px;
-}
-
-.mini-btn,
-.icon-btn {
-  border: 0;
-  background: #f1f4f9;
-  color: #68758b;
-  border-radius: 8px;
-  padding: 7px 9px;
-  cursor: pointer;
-}
-
-.mini-btn.delete {
-  color: #c35d65;
-}
-
-.stack-form {
-  display: grid;
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.stack-form label,
-.file-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: #536078;
-  display: grid;
-  gap: 6px;
-}
-
-.full-btn {
-  width: 100%;
-}
-
-.format-hint {
-  display: grid;
-  gap: 7px;
-  background: #f5f7ff;
-  border: 1px solid #e7ebff;
-  border-radius: 10px;
-  padding: 12px;
-  margin: 14px 0;
-  font-size: 11px;
-}
-
-.format-hint code {
-  font-size: 10px;
-  color: #71809e;
-}
-
-.import-panel textarea {
-  resize: vertical;
-  line-height: 1.7;
-  margin: 10px 0;
-}
-
-.button-row {
-  display: flex;
-  gap: 8px;
-}
-
-.button-row .btn {
-  flex: 1;
-}
-
-.import-message {
-  font-size: 11px;
-  color: #16856a;
-  min-height: 14px;
-}
-
-.tips-panel ul {
-  padding-left: 18px;
-  margin: 15px 0;
-  color: #66738a;
-  font-size: 11px;
-  line-height: 1.9;
-}
-
-.tiny-note {
-  font-size: 10px;
-  line-height: 1.6;
-  color: #929caf;
-}
-
-footer {
-  text-align: center;
-  color: #9aa4b5;
-  font-size: 10px;
-  padding: 25px 0 4px;
-}
-
-@media(max-width:850px) {
-  .workspace {
-    grid-template-columns: 1fr;
+<title>Korean - English - Nepali Vocabulary Flashcards</title>
+<style>
+  :root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg: #f3f4f6;
+    --card-bg: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --active-green: #10b981;
   }
 
-  .side-column {
-    grid-template-columns: 1fr 1fr;
+  * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 
-  .tips-panel {
-    grid-column: 1/-1;
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
   }
 
-  .visibility-panel {
-    align-items: flex-start;
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 20px;
+  }
+
+  /* Control Panel */
+  .controls-bar {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+    display: flex;
     flex-direction: column;
+    gap: 15px;
+    position: sticky;
+    top: 10px;
+    z-index: 100;
   }
 
-  .topbar {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
-@media(max-width:560px) {
-  .app-shell {
-    padding: 25px 14px 18px;
+  .control-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
   }
 
-  .topbar h1 {
-    font-size: 25px;
+  .control-label {
+    font-weight: 700;
+    min-width: 110px;
+    font-size: 0.95rem;
   }
 
-  .panel {
-    padding: 17px;
+  button {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
   }
 
-  .side-column {
-    grid-template-columns: 1fr;
+  button:hover {
+    background: #f9fafb;
   }
 
-  .tips-panel {
-    grid-column: auto;
+  button.toggle-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
   }
 
-  .flashcard {
-    padding: 22px 14px;
+  button.audio-toggle.active {
+    background: var(--active-green);
+    color: white;
+    border-color: var(--active-green);
   }
 
-  .meaning-grid {
-    gap: 8px;
+  button.play-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    padding: 10px 20px;
   }
 
-  .meaning-word {
-    font-size: 16px;
+  button.play-btn.playing {
+    background: #f59e0b;
   }
 
-  .audio-row {
+  button.action-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+  }
+
+  button.action-btn:hover {
+    background: var(--primary-hover);
+  }
+
+  /* Input Sections */
+  .input-section {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .single-inputs {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
   }
 
-  .button-row {
-    flex-direction: column;
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
   }
-}
+
+  textarea {
+    height: 110px;
+    resize: vertical;
+  }
+
+  .hint {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  /* Vocabulary List */
+  .vocab-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 15px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .card.speaking {
+    border-color: var(--active-green);
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+  }
+
+  .card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background: #eee;
+  }
+
+  .word-item {
+    margin: 6px 0;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: #f9fafb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .word-korean {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .word-english {
+    font-size: 1rem;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .word-nepali {
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  .card-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .mini-btn {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+
+  .delete-btn {
+    color: #ef4444;
+    border-color: #fecaca;
+  }
+
+  .voice-warning {
+    font-size: 0.8rem;
+    color: #b45309;
+    background: #fef3c7;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: none;
+  }
 </style>
 </head>
 <body>
 
-<main class="app-shell">
+<div class="container">
+  <h1>🇰🇷 🇺🇸 🇳🇵 Vocabulary Studio</h1>
 
-<header class="topbar">
-  <div>
-    <p class="eyebrow">LANGUAGE LEARNING</p>
-    <h1>Korean Vocabulary <span>Studio</span></h1>
-    <p class="subtitle">Learn Korean with English and Nepali meanings.</p>
-  </div>
-  <div class="top-actions">
-    <button class="btn btn-light" id="importToggle">＋ Bulk import</button>
-    <button class="btn btn-primary" id="addToggle">＋ Add word</button>
-  </div>
-</header>
-
-<section class="visibility-panel panel">
-  <div>
-    <h2>What do you want to see?</h2>
-    <p class="muted">Hide or show each language independently.</p>
-  </div>
-  <div class="toggle-row">
-    <label class="switch-label">
-      <input type="checkbox" id="showKorean" checked>
-      <span class="switch"></span><b>Korean</b>
-    </label>
-    <label class="switch-label">
-      <input type="checkbox" id="showEnglish" checked>
-      <span class="switch"></span><b>English</b>
-    </label>
-    <label class="switch-label">
-      <input type="checkbox" id="showNepali" checked>
-      <span class="switch"></span><b>Nepali</b>
-    </label>
-  </div>
-</section>
-
-<section class="workspace">
-
-<div class="main-column">
-
-<section class="panel study-panel">
-  <div class="section-heading">
-    <div>
-      <p class="eyebrow">YOUR FLASHCARD</p>
-      <h2>Vocabulary practice</h2>
-    </div>
-    <span class="count-pill" id="counter">0 / 0</span>
-  </div>
-
-  <div class="progress-track">
-    <div id="progressBar"></div>
-  </div>
-
-  <div class="flashcard" id="flashcard">
-
-    <div class="word-image-wrap hidden" id="imageWrap">
-      <img id="wordImage" alt="Vocabulary reference">
+  <!-- TOP CONTROLS -->
+  <div class="controls-bar">
+    <!-- Autoplay & Audio Language Selection -->
+    <div class="control-group">
+      <span class="control-label">🔊 Audio Languages:</span>
+      <button id="audio-ko" class="audio-toggle active" onclick="toggleAudioLang('ko')">Korean</button>
+      <button id="audio-en" class="audio-toggle" onclick="toggleAudioLang('en')">English</button>
+      <button id="audio-ne" class="audio-toggle active" onclick="toggleAudioLang('ne')">Nepali</button>
+      <button id="autoplay-btn" class="play-btn" onclick="toggleAutoplay()">▶ Start Autoplay</button>
     </div>
 
-    <div class="language-block" id="koreanBlock">
-      <span class="language-tag">KOREAN · 한국어</span>
-      <div class="word korean-word" id="koreanWord"></div>
+    <!-- View / Visibility Selection -->
+    <div class="control-group">
+      <span class="control-label">👁️ Show Text:</span>
+      <button id="view-ko" class="toggle-btn active" onclick="toggleViewLang('ko')">Korean</button>
+      <button id="view-en" class="toggle-btn active" onclick="toggleViewLang('en')">English</button>
+      <button id="view-ne" class="toggle-btn active" onclick="toggleViewLang('ne')">Nepali</button>
     </div>
 
-    <div class="meaning-grid">
+    <div id="voice-warning" class="voice-warning">
+      ⚠️ Note: Your browser/device does not have a Nepali Text-to-Speech voice installed. Hindi/default voice will be used as fallback for Nepali text.
+    </div>
+  </div>
 
-      <div class="language-block meaning-block" id="englishBlock">
-        <span class="language-tag">ENGLISH</span>
-        <div class="word meaning-word" id="englishMeaning"></div>
+  <!-- ADD VOCABULARY SECTION -->
+  <div class="input-section">
+    <div class="tabs">
+      <button class="toggle-btn active" onclick="switchTab('single', this)">➕ Add Single Word</button>
+      <button class="toggle-btn" onclick="switchTab('bulk', this)">📋 Bulk Import (Comma Separated)</button>
+      <button class="mini-btn delete-btn" style="margin-left:auto;" onclick="clearAllWords()">🗑️ Clear All</button>
+    </div>
+
+    <!-- Single Word Tab -->
+    <div id="tab-single" class="tab-content active">
+      <div class="single-inputs">
+        <input type="text" id="in-ko" placeholder="Korean (e.g. 사과)">
+        <input type="text" id="in-en" placeholder="English (e.g. Apple)">
+        <input type="text" id="in-ne" placeholder="Nepali (e.g. स्याउ)">
+        <input type="text" id="in-img" placeholder="Image URL (Optional)">
       </div>
+      <button class="action-btn" onclick="addSingleWord()">Add Word</button>
+    </div>
 
-      <div class="language-block meaning-block" id="nepaliBlock">
-        <span class="language-tag">NEPALI · नेपाली</span>
-        <div class="word meaning-word nepali-word" id="nepaliMeaning"></div>
+    <!-- Bulk Import Tab -->
+    <div id="tab-bulk" class="tab-content">
+      <div class="hint">
+        Format: <b>Korean, English, Nepali, ImageURL (optional)</b> — one word per line.
       </div>
-
+      <textarea id="bulk-text" placeholder="사과, Apple, स्याउ, https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400
+물, Water, पानी
+학교, School, विद्यालय
+감사합니다, Thank you, धन्यवाद"></textarea>
+      <div style="margin-top: 10px;">
+        <button class="action-btn" onclick="importBulk()">Import Bulk Words</button>
+      </div>
     </div>
-
-    <p class="empty-state hidden" id="emptyState">
-      No vocabulary yet. Add a word or import a list to begin.
-    </p>
-
   </div>
 
-  <div class="audio-row">
-    <button class="audio-btn" id="speakKorean">🔊 Korean</button>
-    <button class="audio-btn" id="speakEnglish">🔊 English</button>
-    <button class="audio-btn" id="speakNepali">🔊 Nepali</button>
-    <button class="audio-btn audio-all" id="speakAll">▶ Play all</button>
-  </div>
-
-  <div class="study-controls">
-    <button class="btn btn-light" id="previousBtn">← Previous</button>
-    <button class="btn btn-primary next-btn" id="nextBtn">Next word →</button>
-  </div>
-
-</section>
-
-<section class="panel list-panel">
-  <div class="section-heading">
-    <div>
-      <p class="eyebrow">YOUR COLLECTION</p>
-      <h2>Vocabulary list</h2>
-    </div>
-    <span class="count-pill" id="totalCount">0 words</span>
-  </div>
-
-  <input
-    class="search-input"
-    id="searchInput"
-    type="search"
-    placeholder="Search Korean, English or Nepali..."
-  >
-
-  <div class="vocab-list" id="vocabList"></div>
-</section>
-
+  <!-- VOCABULARY CARDS -->
+  <div id="vocab-list" class="vocab-list"></div>
 </div>
 
-<aside class="side-column">
-
-<section class="panel editor-panel hidden" id="addPanel">
-  <div class="section-heading">
-    <h2>Add a word</h2>
-    <button class="icon-btn" data-close="addPanel">✕</button>
-  </div>
-
-  <form id="addForm" class="stack-form">
-
-    <label>
-      Korean word
-      <input id="newKorean" required placeholder="예: 사랑">
-    </label>
-
-    <label>
-      English meaning
-      <input id="newEnglish" required placeholder="Love">
-    </label>
-
-    <label>
-      Nepali meaning
-      <input id="newNepali" required placeholder="माया">
-    </label>
-
-    <label>
-      Image URL (optional)
-      <input id="newImage" type="url" placeholder="https://example.com/image.jpg">
-    </label>
-
-    <button class="btn btn-primary full-btn" type="submit">
-      Save vocabulary
-    </button>
-
-  </form>
-</section>
-
-<section class="panel import-panel hidden" id="importPanel">
-
-  <div class="section-heading">
-    <h2>Bulk import</h2>
-    <button class="icon-btn" data-close="importPanel">✕</button>
-  </div>
-
-  <p class="muted">
-    One vocabulary item per line.
-  </p>
-
-  <div class="format-hint">
-    <b>Korean, English, Nepali, Image URL</b>
-    <code>사랑, Love, माया, https://...</code>
-  </div>
-
-  <textarea
-    id="bulkInput"
-    rows="8"
-    placeholder="사랑, Love, माया&#10;학교, School, विद्यालय&#10;물, Water, पानी"
-  ></textarea>
-
-  <label class="file-label">
-    Upload CSV / TXT
-    <input type="file" id="fileInput" accept=".csv,.txt">
-  </label>
-
-  <div class="button-row">
-    <button class="btn btn-light" id="downloadSample" type="button">
-      Sample CSV
-    </button>
-
-    <button class="btn btn-primary" id="importButton" type="button">
-      Import words
-    </button>
-  </div>
-
-  <p class="import-message" id="importMessage"></p>
-
-</section>
-
-<section class="panel tips-panel">
-  <p class="eyebrow">QUICK GUIDE</p>
-  <h2>How it works</h2>
-
-  <ul>
-    <li>Show or hide each language.</li>
-    <li>Listen to individual language audio.</li>
-    <li>Play all three languages one by one.</li>
-    <li>Import vocabulary in bulk.</li>
-    <li>Add optional image URLs.</li>
-    <li>Your vocabulary is saved automatically.</li>
-  </ul>
-
-  <p class="tiny-note">
-    Audio availability depends on your device's speech voices.
-  </p>
-</section>
-
-</aside>
-</section>
-
-<footer>
-  Korean Vocabulary Studio · Daily learning
-</footer>
-
-</main>
-
-<script src="script.js">
-  
-const STORAGE_KEY = "koreanVocabularyStudio.v1";
-
-let words = loadWords();
-let currentIndex = 0;
-let speechQueueToken = 0;
-
-const $ = id => document.getElementById(id);
-
-function loadWords() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  } catch {
-    return [];
-  }
-}
-
-function saveWords() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(words));
-}
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, ch => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
-  }[ch]));
-}
-
-function currentWord() {
-  return words[currentIndex] || null;
-}
-
-function render() {
-  const word = currentWord();
-
-  $("counter").textContent =
-    words.length ? `${currentIndex + 1} / ${words.length}` : "0 / 0";
-
-  $("totalCount").textContent = `${words.length} words`;
-
-  $("progressBar").style.width = words.length
-    ? `${((currentIndex + 1) / words.length) * 100}%`
-    : "0%";
-
-  $("emptyState").classList.toggle("hidden", !!word);
-
-  if (word) {
-    $("koreanWord").textContent = word.korean;
-    $("englishMeaning").textContent = word.english;
-    $("nepaliMeaning").textContent = word.nepali;
-
-    $("imageWrap").classList.toggle("hidden", !word.image);
-
-    if (word.image) {
-      $("wordImage").src = word.image;
-      $("wordImage").onerror = () => {
-        $("imageWrap").classList.add("hidden");
-      };
-    }
-  } else {
-    $("koreanWord").textContent = "";
-    $("englishMeaning").textContent = "";
-    $("nepaliMeaning").textContent = "";
-    $("imageWrap").classList.add("hidden");
-  }
-
-  applyVisibility();
-  renderList();
-}
-
-function applyVisibility() {
-  const word = currentWord();
-
-  $("koreanBlock").classList.toggle(
-    "hidden",
-    !$("showKorean").checked || !word
-  );
-
-  $("englishBlock").classList.toggle(
-    "hidden",
-    !$("showEnglish").checked || !word
-  );
-
-  $("nepaliBlock").classList.toggle(
-    "hidden",
-    !$("showNepali").checked || !word
-  );
-}
-
-function renderList(filter = $("searchInput").value.trim().toLowerCase()) {
-  const list = $("vocabList");
-
-  const matches = words
-    .map((word, index) => ({ ...word, index }))
-    .filter(w =>
-      [w.korean, w.english, w.nepali]
-        .some(v => String(v).toLowerCase().includes(filter))
-    );
-
-  if (!matches.length) {
-    list.innerHTML = `
-      <div class="no-results">
-        ${words.length ? "No matching vocabulary." : "Your saved words will appear here."}
-      </div>`;
-    return;
-  }
-
-  list.innerHTML = matches.map(w => `
-    <div class="vocab-item ${w.index === currentIndex ? "active" : ""}">
-      <div class="vocab-summary"
-           data-select="${w.index}"
-           role="button"
-           tabindex="0">
-
-        <strong>${escapeHTML(w.korean)}</strong>
-
-        <small>
-          ${escapeHTML(w.english)} · ${escapeHTML(w.nepali)}
-        </small>
-
-      </div>
-
-      <div class="item-actions">
-        <button class="mini-btn" data-select="${w.index}">↗</button>
-        <button class="mini-btn delete" data-delete="${w.index}">×</button>
-      </div>
-    </div>
-  `).join("");
-}
-
-function move(delta) {
-  if (!words.length) return;
-
-  currentIndex =
-    (currentIndex + delta + words.length) % words.length;
-
-  render();
-}
-
-// Individual language audio
-function speak(text, lang) {
-  if (!text || !("speechSynthesis" in window)) {
-    alert("Audio is not supported by this browser.");
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-
-  utterance.lang = lang;
-  utterance.rate = 0.88;
-
-  window.speechSynthesis.speak(utterance);
-}
-
-// Play Korean, English and Nepali one by one
-function playAll() {
-  const word = currentWord();
-
-  if (!word || !("speechSynthesis" in window)) return;
-
-  window.speechSynthesis.cancel();
-
-  const token = ++speechQueueToken;
-
-  const queue = [
-    [word.korean, "ko-KR"],
-    [word.english, "en-US"],
-    [word.nepali, "ne-NP"]
+<script>
+  // Default Starter Vocabulary
+  let vocabList = JSON.parse(localStorage.getItem('vocabData')) || [
+    { ko: "사과", en: "Apple", ne: "स्याउ", img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400" },
+    { ko: "물", en: "Water", ne: "पानी", img: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400" },
+    { ko: "책", en: "Book", ne: "किताब", img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400" },
+    { ko: "감사합니다", en: "Thank you", ne: "धन्यवाद", img: "" }
   ];
 
-  function playNext(index) {
-    if (token !== speechQueueToken || index >= queue.length) return;
+  // Active States
+  let audioState = { ko: true, en: false, ne: true };
+  let viewState = { ko: true, en: true, ne: true };
+  let isAutoplaying = false;
+  let currentIndex = 0;
+  let availableVoices = [];
 
-    const [text, lang] = queue[index];
+  // Load Voices
+  function loadVoices() {
+    availableVoices = window.speechSynthesis.getVoices();
+    const hasNepali = availableVoices.some(v => v.lang.toLowerCase().includes('ne'));
+    if (availableVoices.length > 0 && !hasNepali) {
+      document.getElementById('voice-warning').style.display = 'block';
+    }
+  }
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
 
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    utterance.lang = lang;
-    utterance.rate = 0.88;
-
-    utterance.onend = () => playNext(index + 1);
-    utterance.onerror = () => playNext(index + 1);
-
-    speechSynthesis.speak(utterance);
+  // Save & Render
+  function saveData() {
+    localStorage.setItem('vocabData', JSON.stringify(vocabList));
   }
 
-  playNext(0);
-}
+  function renderCards() {
+    const container = document.getElementById('vocab-list');
+    container.innerHTML = '';
 
-// CSV parser supporting quoted commas
-function parseCSVLine(line) {
-  const result = [];
-  let value = "";
-  let quoted = false;
+    vocabList.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.id = `card-${index}`;
 
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
+      let imgHtml = item.img ? `<img src="${item.img}" alt="${item.en}" onerror="this.style.display='none'">` : '';
 
-    if (ch === '"') {
-      if (quoted && line[i + 1] === '"') {
-        value += '"';
-        i++;
-      } else {
-        quoted = !quoted;
+      card.innerHTML = `
+        <div>
+          ${imgHtml}
+          <div class="word-item ${viewState.ko ? '' : 'hidden'}">
+            <span class="word-korean">${item.ko}</span>
+            <button class="mini-btn" onclick="speakSingleText('${escapeQuotes(item.ko)}', 'ko')">🔊</button>
+          </div>
+          <div class="word-item ${viewState.en ? '' : 'hidden'}">
+            <span class="word-english">${item.en}</span>
+            <button class="mini-btn" onclick="speakSingleText('${escapeQuotes(item.en)}', 'en')">🔊</button>
+          </div>
+          <div class="word-item ${viewState.ne ? '' : 'hidden'}">
+            <span class="word-nepali">${item.ne}</span>
+            <button class="mini-btn" onclick="speakSingleText('${escapeQuotes(item.ne)}', 'ne')">🔊</button>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="mini-btn" onclick="playSingleCard(${index})">▶ Play Card</button>
+          <button class="mini-btn delete-btn" onclick="deleteWord(${index})">Delete</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function escapeQuotes(str) {
+    return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  }
+
+  // Toggle Audio Languages
+  function toggleAudioLang(lang) {
+    audioState[lang] = !audioState[lang];
+    document.getElementById(`audio-${lang}`).classList.toggle('active', audioState[lang]);
+  }
+
+  // Toggle View Languages
+  function toggleViewLang(lang) {
+    viewState[lang] = !viewState[lang];
+    document.getElementById(`view-${lang}`).classList.toggle('active', viewState[lang]);
+    renderCards();
+  }
+
+  // Tabs
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tabs .toggle-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(`tab-${tab}`).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Add Single Word
+  function addSingleWord() {
+    const ko = document.getElementById('in-ko').value.trim();
+    const en = document.getElementById('in-en').value.trim();
+    const ne = document.getElementById('in-ne').value.trim();
+    const img = document.getElementById('in-img').value.trim();
+
+    if (!ko && !en && !ne) {
+      alert("Please enter at least one word.");
+      return;
+    }
+
+    vocabList.push({ ko, en, ne, img });
+    saveData();
+    renderCards();
+
+    document.getElementById('in-ko').value = '';
+    document.getElementById('in-en').value = '';
+    document.getElementById('in-ne').value = '';
+    document.getElementById('in-img').value = '';
+  }
+
+  // Import Bulk Words
+  function importBulk() {
+    const raw = document.getElementById('bulk-text').value.trim();
+    if (!raw) return;
+
+    const lines = raw.split('\n');
+    let addedCount = 0;
+
+    lines.forEach(line => {
+      if (!line.trim()) return;
+      const parts = line.split(',').map(p => p.trim());
+      const ko = parts[0] || '';
+      const en = parts[1] || '';
+      const ne = parts[2] || '';
+      // Rejoin remaining parts in case URL has commas
+      const img = parts.slice(3).join(',') || '';
+
+      if (ko || en || ne) {
+        vocabList.push({ ko, en, ne, img });
+        addedCount++;
       }
-    } else if ((ch === "," || ch === "\t") && !quoted) {
-      result.push(value.trim());
-      value = "";
+    });
+
+    saveData();
+    renderCards();
+    document.getElementById('bulk-text').value = '';
+    alert(`Imported ${addedCount} words!`);
+  }
+
+  function deleteWord(index) {
+    stopAutoplay();
+    vocabList.splice(index, 1);
+    saveData();
+    renderCards();
+  }
+
+  function clearAllWords() {
+    if (confirm("Delete all vocabulary words?")) {
+      stopAutoplay();
+      vocabList = [];
+      saveData();
+      renderCards();
+    }
+  }
+
+  // Speech Synthesis Helper
+  function getBestVoice(lang) {
+    if (!availableVoices.length) availableVoices = window.speechSynthesis.getVoices();
+    if (lang === 'ko') {
+      return availableVoices.find(v => v.lang.includes('ko')) || null;
+    }
+    if (lang === 'en') {
+      return availableVoices.find(v => v.lang.includes('en-US')) || availableVoices.find(v => v.lang.includes('en')) || null;
+    }
+    if (lang === 'ne') {
+      // Try Nepali first, fallback to Hindi (Devanagari script) so it reads Nepali script properly
+      return availableVoices.find(v => v.lang.toLowerCase().includes('ne')) ||
+             availableVoices.find(v => v.lang.toLowerCase().includes('hi')) || null;
+    }
+    return null;
+  }
+
+  function speakPromise(text, lang) {
+    return new Promise((resolve) => {
+      if (!text) {
+        resolve();
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voice = getBestVoice(lang);
+      if (voice) utterance.voice = voice;
+
+      if (lang === 'ko') utterance.lang = 'ko-KR';
+      if (lang === 'en') utterance.lang = 'en-US';
+      if (lang === 'ne') utterance.lang = voice ? voice.lang : 'ne-NP';
+
+      utterance.rate = 0.95;
+      utterance.onend = () => setTimeout(resolve, 350); // Pause between words
+      utterance.onerror = () => resolve();
+
+      window.speechSynthesis.speak(utterance);
+    });
+  }
+
+  function speakSingleText(text, lang) {
+    stopAutoplay();
+    window.speechSynthesis.cancel();
+    speakPromise(text, lang);
+  }
+
+  // Play a single card using selected audio toggles
+  async function playSingleCard(index) {
+    stopAutoplay();
+    highlightCard(index);
+    await speakCardLanguages(vocabList[index]);
+    clearHighlights();
+  }
+
+  // Speak enabled languages for a word object
+  async function speakCardLanguages(item) {
+    if (!item) return;
+    if (audioState.ko && item.ko) await speakPromise(item.ko, 'ko');
+    if (audioState.en && item.en) await speakPromise(item.en, 'en');
+    if (audioState.ne && item.ne) await speakPromise(item.ne, 'ne');
+  }
+
+  // Autoplay Logic
+  function toggleAutoplay() {
+    if (isAutoplaying) {
+      stopAutoplay();
     } else {
-      value += ch;
+      startAutoplay();
     }
   }
 
-  result.push(value.trim());
-
-  return result;
-}
-
-// Bulk vocabulary import
-function parseBulk(text) {
-  const lines = text
-    .replace(/^\uFEFF/, "")
-    .split(/\r?\n/)
-    .map(line => line.trim())
-    .filter(Boolean);
-
-  const parsed = [];
-
-  for (const line of lines) {
-    const cols = parseCSVLine(line);
-
-    if (cols.length < 3) continue;
-
-    // Skip header row
-    if (/^(korean|한국어)$/i.test(cols[0]) &&
-        /english/i.test(cols[1])) {
-      continue;
+  function startAutoplay() {
+    if (vocabList.length === 0) return;
+    if (!audioState.ko && !audioState.en && !audioState.ne) {
+      alert("Please turn ON at least one Audio Language (Korean, English, or Nepali) first!");
+      return;
     }
 
-    const [korean, english, nepali, image = ""] = cols;
+    isAutoplaying = true;
+    const btn = document.getElementById('autoplay-btn');
+    btn.textContent = '⏹ Stop Autoplay';
+    btn.classList.add('playing');
 
-    if (korean && english && nepali) {
-      parsed.push({
-        korean,
-        english,
-        nepali,
-        image
-      });
+    currentIndex = 0;
+    runAutoplayLoop();
+  }
+
+  function stopAutoplay() {
+    isAutoplaying = false;
+    window.speechSynthesis.cancel();
+    const btn = document.getElementById('autoplay-btn');
+    btn.textContent = '▶ Start Autoplay';
+    btn.classList.remove('playing');
+    clearHighlights();
+  }
+
+  async function runAutoplayLoop() {
+    while (isAutoplaying && currentIndex < vocabList.length) {
+      highlightCard(currentIndex);
+      await speakCardLanguages(vocabList[currentIndex]);
+      if (!isAutoplaying) break;
+      currentIndex++;
+      await new Promise(r => setTimeout(r, 500)); // Pause before next card
+    }
+    if (isAutoplaying) {
+      stopAutoplay(); // Finished list
     }
   }
 
-  return parsed;
-}
-
-function addWords(items) {
-  const valid = items.filter(
-    w => w.korean && w.english && w.nepali
-  );
-
-  if (!valid.length) return 0;
-
-  words.push(...valid.map(w => ({
-    ...w,
-    id: crypto.randomUUID
-      ? crypto.randomUUID()
-      : String(Date.now() + Math.random())
-  })));
-
-  saveWords();
-
-  currentIndex = words.length - valid.length;
-
-  render();
-
-  return valid.length;
-}
-
-// Navigation
-$("nextBtn").addEventListener("click", () => move(1));
-$("previousBtn").addEventListener("click", () => move(-1));
-
-// Language visibility
-["showKorean", "showEnglish", "showNepali"].forEach(id => {
-  $(id).addEventListener("change", applyVisibility);
-});
-
-// Audio buttons
-$("speakKorean").addEventListener("click", () => {
-  const w = currentWord();
-  if (w) speak(w.korean, "ko-KR");
-});
-
-$("speakEnglish").addEventListener("click", () => {
-  const w = currentWord();
-  if (w) speak(w.english, "en-US");
-});
-
-$("speakNepali").addEventListener("click", () => {
-  const w = currentWord();
-  if (w) speak(w.nepali, "ne-NP");
-});
-
-$("speakAll").addEventListener("click", playAll);
-
-// Open and close panels
-$("addToggle").addEventListener("click", () => {
-  $("addPanel").classList.toggle("hidden");
-  $("importPanel").classList.add("hidden");
-});
-
-$("importToggle").addEventListener("click", () => {
-  $("importPanel").classList.toggle("hidden");
-  $("addPanel").classList.add("hidden");
-});
-
-document.querySelectorAll("[data-close]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    $(btn.dataset.close).classList.add("hidden");
-  });
-});
-
-// Add individual vocabulary
-$("addForm").addEventListener("submit", event => {
-  event.preventDefault();
-
-  const item = {
-    korean: $("newKorean").value.trim(),
-    english: $("newEnglish").value.trim(),
-    nepali: $("newNepali").value.trim(),
-    image: $("newImage").value.trim()
-  };
-
-  const count = addWords([item]);
-
-  if (count) {
-    event.target.reset();
-    $("addPanel").classList.add("hidden");
-  }
-});
-
-// Bulk import
-$("importButton").addEventListener("click", () => {
-  const items = parseBulk($("bulkInput").value);
-
-  const count = addWords(items);
-
-  $("importMessage").textContent = count
-    ? `Successfully imported ${count} word(s).`
-    : "No valid rows found. Add Korean, English and Nepali fields.";
-
-  $("importMessage").style.color = count
-    ? "#16856a"
-    : "#c35d65";
-
-  if (count) {
-    $("bulkInput").value = "";
-  }
-});
-
-// Upload CSV or TXT
-$("fileInput").addEventListener("change", async event => {
-  const file = event.target.files[0];
-
-  if (file) {
-    $("bulkInput").value = await file.text();
-  }
-});
-
-// Download sample CSV
-$("downloadSample").addEventListener("click", () => {
-  const csv =
-`Korean,English,Nepali,Image URL
-사랑,Love,माया,
-학교,School,विद्यालय,
-물,Water,पानी,
-`;
-
-  const blob = new Blob([csv], {
-    type: "text/csv;charset=utf-8"
-  });
-
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-
-  a.href = url;
-  a.download = "korean-vocabulary-sample.csv";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
-});
-
-// Search
-$("searchInput").addEventListener("input", () => {
-  renderList();
-});
-
-// Select or delete vocabulary
-$("vocabList").addEventListener("click", event => {
-  const select = event.target.closest("[data-select]");
-  const del = event.target.closest("[data-delete]");
-
-  if (select) {
-    currentIndex = Number(select.dataset.select);
-    render();
-  }
-
-  if (del) {
-    const index = Number(del.dataset.delete);
-
-    if (confirm(`Delete "${words[index].korean}"?`)) {
-      words.splice(index, 1);
-
-      if (currentIndex >= words.length) {
-        currentIndex = Math.max(0, words.length - 1);
-      }
-
-      saveWords();
-      render();
+  function highlightCard(index) {
+    clearHighlights();
+    const card = document.getElementById(`card-${index}`);
+    if (card) {
+      card.classList.add('speaking');
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
-});
 
-// Keyboard navigation
-$("vocabList").addEventListener("keydown", event => {
-  if (
-    (event.key === "Enter" || event.key === " ") &&
-    event.target.matches("[data-select]")
-  ) {
-    currentIndex = Number(event.target.dataset.select);
-    render();
+  function clearHighlights() {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('speaking'));
   }
-});
 
-document.addEventListener("keydown", event => {
-  if (event.target.matches("input,textarea")) return;
-
-  if (event.key === "ArrowRight") move(1);
-  if (event.key === "ArrowLeft") move(-1);
-});
-
-// Start application
-render();
+  // Initial Render
+  renderCards();
 </script>
+
 </body>
 </html>
