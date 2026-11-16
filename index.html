@@ -63,7 +63,7 @@
     padding-bottom: 84px;
   }
 
-  /* Compact Single-Row Sticky Header */
+  /* Compact Single-Row Header */
   .navbar {
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(14px);
@@ -154,7 +154,7 @@
     padding: 14px 16px 0;
   }
 
-  /* Compact Inline Control Bar (Scrolls naturally — never blocks screen!) */
+  /* Non-intrusive Control Bar */
   .studio-dock {
     background: var(--bg-surface);
     border: 1px solid var(--border-light);
@@ -195,7 +195,6 @@
     color: var(--accent-primary);
   }
 
-  /* Segmented Pills - Responsive & Compact */
   .pill-group {
     display: inline-flex;
     background: var(--bg-subtle);
@@ -239,7 +238,6 @@
     transition: all var(--transition-fast);
   }
 
-  /* Active Audio Pill */
   .seg-btn.audio-active {
     background: var(--bg-surface);
     color: var(--emerald);
@@ -251,7 +249,6 @@
     box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.22);
   }
 
-  /* Active View Pill */
   .seg-btn.view-active {
     background: var(--bg-surface);
     color: var(--accent-primary);
@@ -263,7 +260,6 @@
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.22);
   }
 
-  /* Speed & Autoplay Controls */
   .playback-cluster {
     display: flex;
     align-items: center;
@@ -313,7 +309,7 @@
     box-shadow: 0 3px 12px rgba(225, 29, 72, 0.3);
   }
 
-  /* Floating Mini Stop Pill (Only visible when scrolling while Autoplay is active) */
+  /* Floating Stop Pill */
   .floating-player-pill {
     position: fixed;
     bottom: 20px;
@@ -353,7 +349,7 @@
     cursor: pointer;
   }
 
-  /* Collapsible Add / Import Drawer */
+  /* Composer Card */
   .composer-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-light);
@@ -806,6 +802,99 @@
     color: var(--rose);
   }
 
+  /* Smooth Modal Overlay */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(4px);
+    display: grid;
+    place-items: center;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.2);
+    transform: scale(0.95);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .modal-backdrop.active .modal-card {
+    transform: scale(1);
+  }
+
+  .modal-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+
+  .modal-text {
+    font-size: 0.86rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .modal-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border-light);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+  }
+
+  .modal-btn:hover {
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+  }
+
+  .modal-btn.primary {
+    background: var(--text-primary);
+    color: white;
+    border-color: var(--text-primary);
+  }
+
+  .modal-btn.primary:hover {
+    background: #1e293b;
+  }
+
+  .modal-btn.danger-action {
+    background: var(--rose);
+    color: white;
+    border-color: var(--rose);
+  }
+
+  .modal-btn.danger-action:hover {
+    background: #be123c;
+  }
+
   /* Toast Notification */
   .toast {
     position: fixed;
@@ -851,7 +940,7 @@
     gap: 8px;
   }
 
-  /* Responsive Mobile & Tablet Fit (Prevents Overflow Outside Display) */
+  /* Responsive Fixes */
   @media (max-width: 860px) {
     .input-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -922,7 +1011,7 @@
 
   <main class="container">
 
-    <!-- NON-INTRUSIVE INLINE CONTROL BAR (Never covers half the screen!) -->
+    <!-- STUDIO CONTROL BAR -->
     <section class="studio-dock" aria-label="Playback and View Controls">
       <!-- Audio Toggles -->
       <div class="dock-group">
@@ -982,7 +1071,7 @@
       <span>Nepali system voice not detected on this device; using Devanagari fallback voice.</span>
     </div>
 
-    <!-- COLLAPSIBLE VOCABULARY COMPOSER -->
+    <!-- COLLAPSIBLE COMPOSER CARD -->
     <section class="composer-card">
       <div id="composer-header" class="composer-header has-border">
         <div class="tab-switcher">
@@ -992,8 +1081,8 @@
 
         <div class="composer-tools">
           <button id="toggle-drawer-btn" class="btn-ghost" onclick="toggleDrawer()">Hide Form</button>
-          <button class="btn-ghost" onclick="restoreSampleDeck()">Sample</button>
-          <button class="btn-ghost danger" onclick="clearAllWords()">Clear</button>
+          <button class="btn-ghost" onclick="confirmSampleDeck()">Sample</button>
+          <button class="btn-ghost danger" onclick="confirmClearAll()">Clear</button>
         </div>
       </div>
 
@@ -1050,7 +1139,19 @@
 
   </main>
 
-  <!-- TINY FLOATING STOP PILL (ONLY APPEARS DURING AUTOPLAY) -->
+  <!-- SMOOTH CONFIRMATION MODAL -->
+  <div id="confirm-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <h3 id="modal-title" class="modal-title">Are you sure?</h3>
+      <p id="modal-text" class="modal-text">Do you really want to clear everything?</p>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="closeModal()">Cancel</button>
+        <button id="modal-ok-btn" class="modal-btn primary" onclick="executeModalAction()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING STOP PILL -->
   <div id="floating-pill" class="floating-player-pill">
     <span id="floating-status">Playing Card #1</span>
     <button class="floating-stop-btn" onclick="stopAutoplay()">Stop</button>
@@ -1075,6 +1176,7 @@
   let isAutoplaying = false;
   let currentIndex = 0;
   let availableVoices = [];
+  let pendingModalAction = null;
 
   function loadVoices() {
     availableVoices = window.speechSynthesis.getVoices();
@@ -1096,6 +1198,71 @@
     toast.classList.add('show');
     clearTimeout(window._toastTimer);
     window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  // Modal Dialog Handlers
+  function openModal(title, text, okText, isDanger, actionCallback) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-text').textContent = text;
+    const okBtn = document.getElementById('modal-ok-btn');
+    okBtn.textContent = okText;
+    okBtn.className = isDanger ? 'modal-btn danger-action' : 'modal-btn primary';
+    pendingModalAction = actionCallback;
+    document.getElementById('confirm-modal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('confirm-modal').classList.remove('active');
+    pendingModalAction = null;
+  }
+
+  function executeModalAction() {
+    if (pendingModalAction) {
+      pendingModalAction();
+    }
+    closeModal();
+  }
+
+  function confirmClearAll() {
+    if (vocabList.length === 0) {
+      showToast('Workspace is already empty');
+      return;
+    }
+    openModal(
+      'Clear All Words?',
+      'Are you sure you want to clear everything? This action cannot be undone unless you reload sample cards.',
+      'Clear All',
+      true,
+      () => {
+        stopAutoplay();
+        vocabList = [];
+        saveData();
+        renderCards();
+        showToast('Workspace cleared');
+      }
+    );
+  }
+
+  function confirmSampleDeck() {
+    const isAlreadySample = vocabList.length > 0;
+    const title = isAlreadySample ? 'Reset to Sample Deck?' : 'Load Sample Deck?';
+    const text = isAlreadySample
+      ? 'Loading sample cards will remove your current list and replace it with the default sample deck. Do you want to continue?'
+      : 'Do you want to load the sample vocabulary deck?';
+
+    openModal(
+      title,
+      text,
+      'Load Sample',
+      false,
+      () => {
+        stopAutoplay();
+        vocabList = [...SAMPLE_DECK];
+        saveData();
+        renderCards();
+        showToast('Sample deck loaded successfully');
+      }
+    );
   }
 
   function toggleDrawer() {
@@ -1285,25 +1452,6 @@
     saveData();
     renderCards();
     showToast('Card removed');
-  }
-
-  function clearAllWords() {
-    if (vocabList.length === 0) return;
-    if (confirm('Remove all vocabulary cards from your workspace?')) {
-      stopAutoplay();
-      vocabList = [];
-      saveData();
-      renderCards();
-      showToast('Workspace cleared');
-    }
-  }
-
-  function restoreSampleDeck() {
-    stopAutoplay();
-    vocabList = [...SAMPLE_DECK];
-    saveData();
-    renderCards();
-    showToast('Sample deck loaded');
   }
 
   function exportCSV() {
