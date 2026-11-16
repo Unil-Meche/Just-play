@@ -3,427 +3,1197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Korean - English - Nepali Vocabulary Flashcards</title>
+<title>LingoFlow Studio — Korean · English · Nepali</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@500;600;700&family=Noto+Sans+KR:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #4f46e5;
-    --primary-hover: #4338ca;
-    --bg: #f3f4f6;
-    --card-bg: #ffffff;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-    --active-green: #10b981;
+    --bg-app: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-subtle: #f1f5f9;
+    --bg-hover: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-light: #e2e8f0;
+    --border-focus: #6366f1;
+
+    --accent-primary: #4f46e5;
+    --accent-primary-hover: #4338ca;
+    --accent-soft: #eef2ff;
+
+    --emerald: #059669;
+    --emerald-bg: #ecfdf5;
+    --emerald-border: #a7f3d0;
+
+    --rose: #e11d48;
+    --rose-bg: #fff1f2;
+
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.06), 0 1px 3px -1px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 12px 24px -6px rgba(15, 23, 42, 0.08), 0 4px 10px -3px rgba(15, 23, 42, 0.04);
+    --shadow-glow: 0 0 0 3px rgba(79, 70, 229, 0.16), 0 16px 32px -8px rgba(79, 70, 229, 0.22);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 260ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   * {
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
   }
 
   body {
-    background-color: var(--bg);
-    color: var(--text);
-    margin: 0;
-    padding: 20px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-app);
+    background-image:
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.06) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding-bottom: 80px;
   }
 
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    text-align: center;
-    color: var(--primary);
-    margin-bottom: 20px;
-  }
-
-  /* Control Panel */
-  .controls-bar {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  /* Top Navigation Header */
+  .navbar {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-light);
     position: sticky;
-    top: 10px;
-    z-index: 100;
+    top: 0;
+    z-index: 200;
   }
 
-  .control-group {
+  .navbar-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 14px 24px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
     flex-wrap: wrap;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  }
+
+  .brand-text h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--accent-primary);
+  }
+
+  .brand-text p {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+
+  .nav-actions {
+    display: flex;
     align-items: center;
     gap: 10px;
   }
 
-  .control-label {
-    font-weight: 700;
-    min-width: 110px;
-    font-size: 0.95rem;
+  .stat-pill {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--bg-subtle);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-light);
   }
 
-  button {
-    padding: 8px 16px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: #fff;
-    color: var(--text);
+  /* Main Container */
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+  }
+
+  /* Studio Command Bar (Audio + View Controls) */
+  .studio-dock {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 76px;
+    z-index: 150;
+  }
+
+  .dock-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .dock-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+  }
+
+  .dock-label svg {
+    width: 15px;
+    height: 15px;
+    color: var(--accent-primary);
+  }
+
+  /* Segmented Pills */
+  .pill-group {
+    display: inline-flex;
+    background: var(--bg-subtle);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    gap: 4px;
+  }
+
+  .seg-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+    user-select: none;
+  }
+
+  .seg-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .seg-btn .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: all var(--transition-fast);
+  }
+
+  /* Active Audio Pill */
+  .seg-btn.audio-active {
+    background: var(--bg-surface);
+    color: var(--emerald);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .seg-btn.audio-active .dot {
+    background: var(--emerald);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+  }
+
+  /* Active View Pill */
+  .seg-btn.view-active {
+    background: var(--bg-surface);
+    color: var(--accent-primary);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .seg-btn.view-active .dot {
+    background: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  }
+
+  /* Speed & Autoplay Controls */
+  .playback-cluster {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .speed-select {
+    appearance: none;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .speed-select:hover {
+    border-color: #cbd5e1;
+  }
+
+  .btn-autoplay {
+    appearance: none;
+    border: none;
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+    transition: all var(--transition-smooth);
   }
 
-  button:hover {
-    background: #f9fafb;
+  .btn-autoplay:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.36);
   }
 
-  button.toggle-btn.active {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
+  .btn-autoplay:active {
+    transform: translateY(0);
   }
 
-  button.audio-toggle.active {
-    background: var(--active-green);
-    color: white;
-    border-color: var(--active-green);
+  .btn-autoplay.is-playing {
+    background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.32);
   }
 
-  button.play-btn {
-    background: #ef4444;
-    color: white;
-    border: none;
-    font-size: 1rem;
-    padding: 10px 20px;
+  /* Collapsible Add / Import Drawer */
+  .composer-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 28px;
+    overflow: hidden;
   }
 
-  button.play-btn.playing {
-    background: #f59e0b;
-  }
-
-  button.action-btn {
-    background: var(--primary);
-    color: white;
-    border: none;
-  }
-
-  button.action-btn:hover {
-    background: var(--primary-hover);
-  }
-
-  /* Input Sections */
-  .input-section {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    margin-bottom: 20px;
-  }
-
-  .tabs {
+  .composer-header {
+    padding: 14px 20px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-light);
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
-  .tab-content {
+  .tab-switcher {
+    display: inline-flex;
+    background: var(--bg-subtle);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    gap: 4px;
+  }
+
+  .tab-btn {
+    border: none;
+    background: transparent;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+  }
+
+  .tab-btn.active {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .composer-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-ghost {
+    border: 1px solid var(--border-light);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    padding: 7px 13px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-ghost:hover {
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+  }
+
+  .btn-ghost.danger:hover {
+    background: var(--rose-bg);
+    color: var(--rose);
+    border-color: #fecdd3;
+  }
+
+  .composer-body {
+    padding: 20px;
+  }
+
+  .tab-panel {
     display: none;
+    animation: fadeIn 0.2s ease;
   }
 
-  .tab-content.active {
+  .tab-panel.active {
     display: block;
   }
 
-  .single-inputs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
-    margin-bottom: 10px;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  input, textarea {
+  .input-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  @media (max-width: 860px) {
+    .input-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .input-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .field-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .field-wrap label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .input-field, .bulk-textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 0.95rem;
+    background: var(--bg-app);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    outline: none;
   }
 
-  textarea {
-    height: 110px;
+  .input-field:focus, .bulk-textarea:focus {
+    background: var(--bg-surface);
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14);
+  }
+
+  .bulk-textarea {
+    min-height: 115px;
     resize: vertical;
+    font-family: 'Inter', monospace;
+    line-height: 1.6;
   }
 
-  .hint {
+  .bulk-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .format-hint {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: var(--bg-subtle);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+  }
+
+  .format-hint code {
+    font-weight: 600;
+    color: var(--accent-primary);
+  }
+
+  .btn-primary {
+    border: none;
+    background: var(--text-primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-primary:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+  }
+
+  /* Search & Filter Toolbar */
+  .grid-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    position: relative;
+    width: 280px;
+    max-width: 100%;
+  }
+
+  .search-box svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 9px 14px 9px 36px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-light);
+    background: var(--bg-surface);
     font-size: 0.85rem;
-    color: var(--muted);
-    margin-bottom: 8px;
+    outline: none;
+    transition: all var(--transition-fast);
   }
 
-  /* Vocabulary List */
-  .vocab-list {
+  .search-box input:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  }
+
+  /* Vocabulary Card Grid */
+  .vocab-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
   }
 
-  .card {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    border: 2px solid transparent;
-    transition: all 0.25s;
+  .vocab-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-smooth);
     position: relative;
   }
 
-  .card.speaking {
-    border-color: var(--active-green);
-    transform: scale(1.02);
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+  .vocab-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: #cbd5e1;
   }
 
-  .card img {
+  /* Active Speaking Card State */
+  .vocab-card.is-speaking {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  .vocab-card.is-speaking::before {
+    content: "NOW PLAYING";
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    background: var(--accent-primary);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4);
+    animation: pulseBadge 1.5s infinite;
+  }
+
+  @keyframes pulseBadge {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+  }
+
+  .card-media {
     width: 100%;
-    height: 140px;
+    height: 165px;
+    background: var(--bg-subtle);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .card-media img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    background: #eee;
+    transition: transform 0.5s ease;
   }
 
-  .word-item {
-    margin: 6px 0;
-    padding: 6px 8px;
-    border-radius: 6px;
-    background: #f9fafb;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .vocab-card:hover .card-media img {
+    transform: scale(1.04);
   }
 
-  .word-korean {
-    font-size: 1.3rem;
+  .card-index-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(6px);
+    color: white;
+    font-size: 0.72rem;
     font-weight: 700;
-    color: #111827;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
   }
 
-  .word-english {
-    font-size: 1rem;
-    color: #374151;
-    font-weight: 500;
+  .card-body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
   }
 
-  .word-nepali {
-    font-size: 1.1rem;
-    color: var(--primary);
+  .lang-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    background: var(--bg-app);
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+  }
+
+  .lang-row:hover {
+    background: var(--bg-subtle);
+    border-color: var(--border-light);
+  }
+
+  .lang-row.active-utterance {
+    background: var(--emerald-bg);
+    border-color: var(--emerald-border);
+  }
+
+  .lang-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .lang-tag {
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  .text-ko {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1.32rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
+
+  .text-en {
+    font-size: 0.98rem;
     font-weight: 600;
+    color: var(--text-secondary);
+    word-break: break-word;
   }
 
-  .hidden {
+  .text-ne {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    word-break: break-word;
+  }
+
+  .speak-icon-btn {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .speak-icon-btn:hover {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+    transform: scale(1.06);
+  }
+
+  .hidden-row {
     display: none !important;
   }
 
-  .card-actions {
+  .masked-placeholder {
+    padding: 18px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.84rem;
+    background: var(--bg-app);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-light);
+  }
+
+  .card-footer {
+    padding: 12px 18px;
+    background: var(--bg-app);
+    border-top: 1px solid var(--border-light);
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
   }
 
-  .mini-btn {
-    padding: 4px 10px;
+  .btn-play-card {
+    border: none;
+    background: var(--accent-soft);
+    color: var(--accent-primary);
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
     font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
   }
 
-  .delete-btn {
-    color: #ef4444;
-    border-color: #fecaca;
+  .btn-play-card:hover {
+    background: var(--accent-primary);
+    color: white;
   }
 
-  .voice-warning {
+  .btn-icon-delete {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-icon-delete:hover {
+    background: var(--rose-bg);
+    color: var(--rose);
+  }
+
+  /* Toast Notification */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--text-primary);
+    color: white;
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 999;
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Empty State */
+  .empty-state {
+    grid-column: 1 / -1;
+    background: var(--bg-surface);
+    border: 1px dashed #cbd5e1;
+    border-radius: var(--radius-xl);
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .empty-state h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+
+  .empty-state p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  /* Voice Banner */
+  .voice-notice {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
     font-size: 0.8rem;
-    color: #b45309;
-    background: #fef3c7;
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: 9px 14px;
+    border-radius: var(--radius-md);
+    margin-bottom: 18px;
     display: none;
+    align-items: center;
+    gap: 8px;
   }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>🇰🇷 🇺🇸 🇳🇵 Vocabulary Studio</h1>
-
-  <!-- TOP CONTROLS -->
-  <div class="controls-bar">
-    <!-- Autoplay & Audio Language Selection -->
-    <div class="control-group">
-      <span class="control-label">🔊 Audio Languages:</span>
-      <button id="audio-ko" class="audio-toggle active" onclick="toggleAudioLang('ko')">Korean</button>
-      <button id="audio-en" class="audio-toggle" onclick="toggleAudioLang('en')">English</button>
-      <button id="audio-ne" class="audio-toggle active" onclick="toggleAudioLang('ne')">Nepali</button>
-      <button id="autoplay-btn" class="play-btn" onclick="toggleAutoplay()">▶ Start Autoplay</button>
-    </div>
-
-    <!-- View / Visibility Selection -->
-    <div class="control-group">
-      <span class="control-label">👁️ Show Text:</span>
-      <button id="view-ko" class="toggle-btn active" onclick="toggleViewLang('ko')">Korean</button>
-      <button id="view-en" class="toggle-btn active" onclick="toggleViewLang('en')">English</button>
-      <button id="view-ne" class="toggle-btn active" onclick="toggleViewLang('ne')">Nepali</button>
-    </div>
-
-    <div id="voice-warning" class="voice-warning">
-      ⚠️ Note: Your browser/device does not have a Nepali Text-to-Speech voice installed. Hindi/default voice will be used as fallback for Nepali text.
-    </div>
-  </div>
-
-  <!-- ADD VOCABULARY SECTION -->
-  <div class="input-section">
-    <div class="tabs">
-      <button class="toggle-btn active" onclick="switchTab('single', this)">➕ Add Single Word</button>
-      <button class="toggle-btn" onclick="switchTab('bulk', this)">📋 Bulk Import (Comma Separated)</button>
-      <button class="mini-btn delete-btn" style="margin-left:auto;" onclick="clearAllWords()">🗑️ Clear All</button>
-    </div>
-
-    <!-- Single Word Tab -->
-    <div id="tab-single" class="tab-content active">
-      <div class="single-inputs">
-        <input type="text" id="in-ko" placeholder="Korean (e.g. 사과)">
-        <input type="text" id="in-en" placeholder="English (e.g. Apple)">
-        <input type="text" id="in-ne" placeholder="Nepali (e.g. स्याउ)">
-        <input type="text" id="in-img" placeholder="Image URL (Optional)">
+  <!-- TOP HEADER -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">
+        <div class="brand-logo">LF</div>
+        <div class="brand-text">
+          <h1>LingoFlow Studio <span class="brand-badge">PRO</span></h1>
+          <p>Trilingual Audio & Flashcard Workspace · Korean · English · Nepali</p>
+        </div>
       </div>
-      <button class="action-btn" onclick="addSingleWord()">Add Word</button>
+
+      <div class="nav-actions">
+        <span id="word-counter" class="stat-pill">0 Cards</span>
+        <button class="btn-ghost" onclick="exportCSV()" title="Export your list">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- STICKY STUDIO CONTROL DOCK -->
+    <section class="studio-dock" aria-label="Playback and View Controls">
+      <!-- Audio Toggles -->
+      <div class="dock-section">
+        <span class="dock-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          Audio
+        </span>
+        <div class="pill-group">
+          <button id="audio-ko" class="seg-btn audio-active" onclick="toggleAudioLang('ko')">
+            <span class="dot"></span> Korean
+          </button>
+          <button id="audio-en" class="seg-btn" onclick="toggleAudioLang('en')">
+            <span class="dot"></span> English
+          </button>
+          <button id="audio-ne" class="seg-btn audio-active" onclick="toggleAudioLang('ne')">
+            <span class="dot"></span> Nepali
+          </button>
+        </div>
+      </div>
+
+      <!-- Visibility Toggles -->
+      <div class="dock-section">
+        <span class="dock-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Display
+        </span>
+        <div class="pill-group">
+          <button id="view-ko" class="seg-btn view-active" onclick="toggleViewLang('ko')">
+            <span class="dot"></span> Korean
+          </button>
+          <button id="view-en" class="seg-btn view-active" onclick="toggleViewLang('en')">
+            <span class="dot"></span> English
+          </button>
+          <button id="view-ne" class="seg-btn view-active" onclick="toggleViewLang('ne')">
+            <span class="dot"></span> Nepali
+          </button>
+        </div>
+      </div>
+
+      <!-- Speed + Autoplay Button -->
+      <div class="playback-cluster">
+        <select id="speech-rate" class="speed-select" title="Pronunciation Speed">
+          <option value="0.75">0.75x Slow</option>
+          <option value="0.95" selected>1.0x Normal</option>
+          <option value="1.2">1.2x Fast</option>
+        </select>
+
+        <button id="autoplay-btn" class="btn-autoplay" onclick="toggleAutoplay()">
+          <svg id="play-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span id="autoplay-label">Start Autoplay</span>
+        </button>
+      </div>
+    </section>
+
+    <div id="voice-notice" class="voice-notice">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>Nepali system voice not detected on this device; using Devanagari fallback voice for Nepali pronunciation.</span>
     </div>
 
-    <!-- Bulk Import Tab -->
-    <div id="tab-bulk" class="tab-content">
-      <div class="hint">
-        Format: <b>Korean, English, Nepali, ImageURL (optional)</b> — one word per line.
+    <!-- VOCABULARY COMPOSER (ADD / BULK IMPORT) -->
+    <section class="composer-card">
+      <div class="composer-header">
+        <div class="tab-switcher">
+          <button class="tab-btn active" onclick="switchTab('single', this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Single Card
+          </button>
+          <button class="tab-btn" onclick="switchTab('bulk', this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Bulk Import (CSV / Comma)
+          </button>
+        </div>
+
+        <div class="composer-tools">
+          <button class="btn-ghost" onclick="restoreSampleDeck()">Load Sample Deck</button>
+          <button class="btn-ghost danger" onclick="clearAllWords()">Clear All</button>
+        </div>
       </div>
-      <textarea id="bulk-text" placeholder="사과, Apple, स्याउ, https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400
+
+      <div class="composer-body">
+        <!-- Single Entry Form -->
+        <div id="panel-single" class="tab-panel active">
+          <div class="input-grid">
+            <div class="field-wrap">
+              <label for="in-ko">Korean (한국어)</label>
+              <input id="in-ko" class="input-field" type="text" placeholder="e.g. 사과" onkeydown="handleEnter(event)">
+            </div>
+            <div class="field-wrap">
+              <label for="in-en">English Meaning</label>
+              <input id="in-en" class="input-field" type="text" placeholder="e.g. Apple" onkeydown="handleEnter(event)">
+            </div>
+            <div class="field-wrap">
+              <label for="in-ne">Nepali Meaning (नेपाली)</label>
+              <input id="in-ne" class="input-field" type="text" placeholder="e.g. स्याउ" onkeydown="handleEnter(event)">
+            </div>
+            <div class="field-wrap">
+              <label for="in-img">Image URL (Optional)</label>
+              <input id="in-img" class="input-field" type="url" placeholder="https://..." onkeydown="handleEnter(event)">
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end;">
+            <button class="btn-primary" onclick="addSingleWord()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add to Deck
+            </button>
+          </div>
+        </div>
+
+        <!-- Bulk Import Form -->
+        <div id="panel-bulk" class="tab-panel">
+          <textarea id="bulk-text" class="bulk-textarea" placeholder="사과, Apple, स्याउ, https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500
 물, Water, पानी
-학교, School, विद्यालय
+책, Book, किताब, https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500
 감사합니다, Thank you, धन्यवाद"></textarea>
-      <div style="margin-top: 10px;">
-        <button class="action-btn" onclick="importBulk()">Import Bulk Words</button>
+          <div class="bulk-footer">
+            <span class="format-hint">Syntax: <code>Korean, English, Nepali, ImageURL</code> (one entry per line)</span>
+            <button class="btn-primary" onclick="importBulk()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="20 6 9 17 4 12"/></svg>
+              Import Vocabulary
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEARCH BAR -->
+    <div class="grid-toolbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search-input" type="text" placeholder="Filter Korean, English, or Nepali..." oninput="renderCards()">
       </div>
     </div>
-  </div>
 
-  <!-- VOCABULARY CARDS -->
-  <div id="vocab-list" class="vocab-list"></div>
-</div>
+    <!-- VOCABULARY DECK GRID -->
+    <section id="vocab-grid" class="vocab-grid"></section>
+
+  </main>
+
+  <!-- TOAST FEEDBACK -->
+  <div id="toast" class="toast"></div>
 
 <script>
-  // Default Starter Vocabulary
-  let vocabList = JSON.parse(localStorage.getItem('vocabData')) || [
-    { ko: "사과", en: "Apple", ne: "स्याउ", img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400" },
-    { ko: "물", en: "Water", ne: "पानी", img: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400" },
-    { ko: "책", en: "Book", ne: "किताब", img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400" },
+  const SAMPLE_DECK = [
+    { ko: "사과", en: "Apple", ne: "स्याउ", img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&q=80" },
+    { ko: "물", en: "Water", ne: "पानी", img: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=600&q=80" },
+    { ko: "책", en: "Book", ne: "किताब", img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&q=80" },
+    { ko: "커피", en: "Coffee", ne: "कफी", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" },
+    { ko: "학교", en: "School", ne: "विद्यालय", img: "" },
     { ko: "감사합니다", en: "Thank you", ne: "धन्यवाद", img: "" }
   ];
 
-  // Active States
+  let vocabList = JSON.parse(localStorage.getItem('lingoflow_vocab_v2')) || [...SAMPLE_DECK];
   let audioState = { ko: true, en: false, ne: true };
   let viewState = { ko: true, en: true, ne: true };
   let isAutoplaying = false;
   let currentIndex = 0;
   let availableVoices = [];
 
-  // Load Voices
+  // Initialize Speech Voices
   function loadVoices() {
     availableVoices = window.speechSynthesis.getVoices();
     const hasNepali = availableVoices.some(v => v.lang.toLowerCase().includes('ne'));
     if (availableVoices.length > 0 && !hasNepali) {
-      document.getElementById('voice-warning').style.display = 'block';
+      document.getElementById('voice-notice').style.display = 'flex';
     }
   }
   window.speechSynthesis.onvoiceschanged = loadVoices;
   loadVoices();
 
-  // Save & Render
   function saveData() {
-    localStorage.setItem('vocabData', JSON.stringify(vocabList));
+    localStorage.setItem('lingoflow_vocab_v2', JSON.stringify(vocabList));
   }
 
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  // Render Cards
   function renderCards() {
-    const container = document.getElementById('vocab-list');
-    container.innerHTML = '';
+    const grid = document.getElementById('vocab-grid');
+    const query = document.getElementById('search-input').value.trim().toLowerCase();
+    document.getElementById('word-counter').textContent = `${vocabList.length} ${vocabList.length === 1 ? 'Card' : 'Cards'}`;
 
-    vocabList.forEach((item, index) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.id = `card-${index}`;
+    const filtered = vocabList
+      .map((item, originalIndex) => ({ ...item, originalIndex }))
+      .filter(item =>
+        !query ||
+        item.ko.toLowerCase().includes(query) ||
+        item.en.toLowerCase().includes(query) ||
+        item.ne.toLowerCase().includes(query)
+      );
 
-      let imgHtml = item.img ? `<img src="${item.img}" alt="${item.en}" onerror="this.style.display='none'">` : '';
-
-      card.innerHTML = `
-        <div>
-          ${imgHtml}
-          <div class="word-item ${viewState.ko ? '' : 'hidden'}">
-            <span class="word-korean">${item.ko}</span>
-            <button class="mini-btn" onclick="speakSingleText('${escapeQuotes(item.ko)}', 'ko')">🔊</button>
-          </div>
-          <div class="word-item ${viewState.en ? '' : 'hidden'}">
-            <span class="word-english">${item.en}</span>
-            <button class="mini-btn" onclick="speakSingleText('${escapeQuotes(item.en)}', 'en')">🔊</button>
-          </div>
-          <div class="word-item ${viewState.ne ? '' : 'hidden'}">
-            <span class="word-nepali">${item.ne}</span>
-            <button class="mini-btn" onclick="speakSingleText('${escapeQuotes(item.ne)}', 'ne')">🔊</button>
-          </div>
-        </div>
-        <div class="card-actions">
-          <button class="mini-btn" onclick="playSingleCard(${index})">▶ Play Card</button>
-          <button class="mini-btn delete-btn" onclick="deleteWord(${index})">Delete</button>
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state">
+          <h3>No vocabulary cards found</h3>
+          <p>Add a new word above, import a comma-separated list, or clear your search filter.</p>
         </div>
       `;
-      container.appendChild(card);
-    });
+      return;
+    }
+
+    const allHidden = !viewState.ko && !viewState.en && !viewState.ne;
+
+    grid.innerHTML = filtered.map(item => {
+      const idx = item.originalIndex;
+      const mediaBlock = item.img
+        ? `<div class="card-media">
+             <img src="${escapeAttr(item.img)}" alt="${escapeAttr(item.en)}" loading="lazy" onerror="this.parentElement.style.display='none'">
+             <span class="card-index-badge">#${idx + 1}</span>
+           </div>`
+        : '';
+
+      return `
+        <article class="vocab-card" id="card-${idx}">
+          <div>
+            ${mediaBlock}
+            <div class="card-body">
+              ${!item.img ? `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;"><span style="font-size:0.72rem;font-weight:700;color:var(--text-muted);">CARD #${idx + 1}</span></div>` : ''}
+
+              ${allHidden ? `<div class="masked-placeholder">All text hidden for audio recall practice</div>` : ''}
+
+              <div id="row-${idx}-ko" class="lang-row ${viewState.ko ? '' : 'hidden-row'}">
+                <div class="lang-meta">
+                  <span class="lang-tag">Korean</span>
+                  <span class="text-ko">${escapeHtml(item.ko || '—')}</span>
+                </div>
+                ${item.ko ? `<button class="speak-icon-btn" title="Pronounce Korean" onclick="speakSingleText(${idx}, 'ko')">${speakerSvg()}</button>` : ''}
+              </div>
+
+              <div id="row-${idx}-en" class="lang-row ${viewState.en ? '' : 'hidden-row'}">
+                <div class="lang-meta">
+                  <span class="lang-tag">English</span>
+                  <span class="text-en">${escapeHtml(item.en || '—')}</span>
+                </div>
+                ${item.en ? `<button class="speak-icon-btn" title="Pronounce English" onclick="speakSingleText(${idx}, 'en')">${speakerSvg()}</button>` : ''}
+              </div>
+
+              <div id="row-${idx}-ne" class="lang-row ${viewState.ne ? '' : 'hidden-row'}">
+                <div class="lang-meta">
+                  <span class="lang-tag">Nepali</span>
+                  <span class="text-ne">${escapeHtml(item.ne || '—')}</span>
+                </div>
+                ${item.ne ? `<button class="speak-icon-btn" title="Pronounce Nepali" onclick="speakSingleText(${idx}, 'ne')">${speakerSvg()}</button>` : ''}
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button class="btn-play-card" onclick="playSingleCard(${idx})">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Play Card
+            </button>
+            <button class="btn-icon-delete" title="Delete Card" onclick="deleteWord(${idx})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </article>
+      `;
+    }).join('');
   }
 
-  function escapeQuotes(str) {
-    return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  function speakerSvg() {
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
   }
 
-  // Toggle Audio Languages
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function escapeAttr(str) {
+    return String(str).replace(/"/g, '&quot;');
+  }
+
+  // Toggle Audio Channels
   function toggleAudioLang(lang) {
     audioState[lang] = !audioState[lang];
-    document.getElementById(`audio-${lang}`).classList.toggle('active', audioState[lang]);
+    document.getElementById(`audio-${lang}`).classList.toggle('audio-active', audioState[lang]);
   }
 
-  // Toggle View Languages
+  // Toggle Display Channels
   function toggleViewLang(lang) {
     viewState[lang] = !viewState[lang];
-    document.getElementById(`view-${lang}`).classList.toggle('active', viewState[lang]);
+    document.getElementById(`view-${lang}`).classList.toggle('view-active', viewState[lang]);
     renderCards();
   }
 
-  // Tabs
+  // Composer Tabs
   function switchTab(tab, btn) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tabs .toggle-btn').forEach(el => el.classList.remove('active'));
-    document.getElementById(`tab-${tab}`).classList.add('active');
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`panel-${tab}`).classList.add('active');
     btn.classList.add('active');
   }
 
-  // Add Single Word
+  function handleEnter(e) {
+    if (e.key === 'Enter') addSingleWord();
+  }
+
   function addSingleWord() {
     const ko = document.getElementById('in-ko').value.trim();
     const en = document.getElementById('in-en').value.trim();
@@ -431,27 +1201,28 @@
     const img = document.getElementById('in-img').value.trim();
 
     if (!ko && !en && !ne) {
-      alert("Please enter at least one word.");
+      showToast('Enter at least one word before adding.');
       return;
     }
 
-    vocabList.push({ ko, en, ne, img });
+    vocabList.unshift({ ko, en, ne, img });
     saveData();
     renderCards();
 
-    document.getElementById('in-ko').value = '';
-    document.getElementById('in-en').value = '';
-    document.getElementById('in-ne').value = '';
-    document.getElementById('in-img').value = '';
+    ['in-ko', 'in-en', 'in-ne', 'in-img'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('in-ko').focus();
+    showToast('Added new vocabulary card');
   }
 
-  // Import Bulk Words
   function importBulk() {
     const raw = document.getElementById('bulk-text').value.trim();
-    if (!raw) return;
+    if (!raw) {
+      showToast('Paste comma-separated lines to import.');
+      return;
+    }
 
     const lines = raw.split('\n');
-    let addedCount = 0;
+    let count = 0;
 
     lines.forEach(line => {
       if (!line.trim()) return;
@@ -459,19 +1230,18 @@
       const ko = parts[0] || '';
       const en = parts[1] || '';
       const ne = parts[2] || '';
-      // Rejoin remaining parts in case URL has commas
       const img = parts.slice(3).join(',') || '';
 
       if (ko || en || ne) {
         vocabList.push({ ko, en, ne, img });
-        addedCount++;
+        count++;
       }
     });
 
     saveData();
     renderCards();
     document.getElementById('bulk-text').value = '';
-    alert(`Imported ${addedCount} words!`);
+    showToast(`Successfully imported ${count} cards`);
   }
 
   function deleteWord(index) {
@@ -479,98 +1249,126 @@
     vocabList.splice(index, 1);
     saveData();
     renderCards();
+    showToast('Card removed');
   }
 
   function clearAllWords() {
-    if (confirm("Delete all vocabulary words?")) {
+    if (vocabList.length === 0) return;
+    if (confirm('Remove all vocabulary cards from your workspace?')) {
       stopAutoplay();
       vocabList = [];
       saveData();
       renderCards();
+      showToast('Workspace cleared');
     }
   }
 
-  // Speech Synthesis Helper
+  function restoreSampleDeck() {
+    stopAutoplay();
+    vocabList = [...SAMPLE_DECK];
+    saveData();
+    renderCards();
+    showToast('Sample deck loaded');
+  }
+
+  function exportCSV() {
+    if (!vocabList.length) {
+      showToast('Nothing to export');
+      return;
+    }
+    const csv = vocabList.map(w => [w.ko, w.en, w.ne, w.img].filter(Boolean).join(', ')).join('\n');
+    const blob = new Blob([csv], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'lingoflow-vocabulary.txt';
+    a.click();
+    showToast('Exported vocabulary list');
+  }
+
+  // Speech Synthesis Engine
   function getBestVoice(lang) {
     if (!availableVoices.length) availableVoices = window.speechSynthesis.getVoices();
-    if (lang === 'ko') {
-      return availableVoices.find(v => v.lang.includes('ko')) || null;
-    }
-    if (lang === 'en') {
-      return availableVoices.find(v => v.lang.includes('en-US')) || availableVoices.find(v => v.lang.includes('en')) || null;
-    }
+    if (lang === 'ko') return availableVoices.find(v => v.lang.includes('ko')) || null;
+    if (lang === 'en') return availableVoices.find(v => v.lang.includes('en-US')) || availableVoices.find(v => v.lang.includes('en')) || null;
     if (lang === 'ne') {
-      // Try Nepali first, fallback to Hindi (Devanagari script) so it reads Nepali script properly
       return availableVoices.find(v => v.lang.toLowerCase().includes('ne')) ||
              availableVoices.find(v => v.lang.toLowerCase().includes('hi')) || null;
     }
     return null;
   }
 
-  function speakPromise(text, lang) {
-    return new Promise((resolve) => {
-      if (!text) {
-        resolve();
-        return;
-      }
+  function speakPromise(text, lang, cardIndex = null) {
+    return new Promise(resolve => {
+      if (!text) return resolve();
+
+      const rowEl = cardIndex !== null ? document.getElementById(`row-${cardIndex}-${lang}`) : null;
+      if (rowEl) rowEl.classList.add('active-utterance');
+
       const utterance = new SpeechSynthesisUtterance(text);
       const voice = getBestVoice(lang);
       if (voice) utterance.voice = voice;
 
-      if (lang === 'ko') utterance.lang = 'ko-KR';
-      if (lang === 'en') utterance.lang = 'en-US';
-      if (lang === 'ne') utterance.lang = voice ? voice.lang : 'ne-NP';
+      utterance.lang = lang === 'ko' ? 'ko-KR' : lang === 'en' ? 'en-US' : (voice ? voice.lang : 'ne-NP');
+      utterance.rate = parseFloat(document.getElementById('speech-rate').value) || 0.95;
 
-      utterance.rate = 0.95;
-      utterance.onend = () => setTimeout(resolve, 350); // Pause between words
-      utterance.onerror = () => resolve();
+      const finish = () => {
+        if (rowEl) rowEl.classList.remove('active-utterance');
+        setTimeout(resolve, 280);
+      };
 
+      utterance.onend = finish;
+      utterance.onerror = finish;
       window.speechSynthesis.speak(utterance);
     });
   }
 
-  function speakSingleText(text, lang) {
+  function speakSingleText(index, lang) {
     stopAutoplay();
     window.speechSynthesis.cancel();
-    speakPromise(text, lang);
-  }
-
-  // Play a single card using selected audio toggles
-  async function playSingleCard(index) {
-    stopAutoplay();
-    highlightCard(index);
-    await speakCardLanguages(vocabList[index]);
-    clearHighlights();
-  }
-
-  // Speak enabled languages for a word object
-  async function speakCardLanguages(item) {
-    if (!item) return;
-    if (audioState.ko && item.ko) await speakPromise(item.ko, 'ko');
-    if (audioState.en && item.en) await speakPromise(item.en, 'en');
-    if (audioState.ne && item.ne) await speakPromise(item.ne, 'ne');
-  }
-
-  // Autoplay Logic
-  function toggleAutoplay() {
-    if (isAutoplaying) {
-      stopAutoplay();
-    } else {
-      startAutoplay();
+    const item = vocabList[index];
+    if (item && item[lang]) {
+      speakPromise(item[lang], lang, index);
     }
   }
 
-  function startAutoplay() {
-    if (vocabList.length === 0) return;
+  async function playSingleCard(index) {
     if (!audioState.ko && !audioState.en && !audioState.ne) {
-      alert("Please turn ON at least one Audio Language (Korean, English, or Nepali) first!");
+      showToast('Turn on at least one Audio language above');
+      return;
+    }
+    stopAutoplay();
+    highlightCard(index, false);
+    await speakCardLanguages(vocabList[index], index);
+    clearHighlights();
+  }
+
+  async function speakCardLanguages(item, index) {
+    if (!item) return;
+    if (audioState.ko && item.ko) await speakPromise(item.ko, 'ko', index);
+    if (audioState.en && item.en) await speakPromise(item.en, 'en', index);
+    if (audioState.ne && item.ne) await speakPromise(item.ne, 'ne', index);
+  }
+
+  // Autoplay Loop
+  function toggleAutoplay() {
+    isAutoplaying ? stopAutoplay() : startAutoplay();
+  }
+
+  function startAutoplay() {
+    if (vocabList.length === 0) {
+      showToast('Add some cards first');
+      return;
+    }
+    if (!audioState.ko && !audioState.en && !audioState.ne) {
+      showToast('Enable Korean, English, or Nepali audio first');
       return;
     }
 
     isAutoplaying = true;
     const btn = document.getElementById('autoplay-btn');
-    btn.textContent = '⏹ Stop Autoplay';
-    btn.classList.add('playing');
+    btn.classList.add('is-playing');
+    document.getElementById('autoplay-label').textContent = 'Stop Autoplay';
+    document.getElementById('play-icon').innerHTML = `<rect x="6" y="6" width="12" height="12" rx="1"/>`;
 
     currentIndex = 0;
     runAutoplayLoop();
@@ -580,40 +1378,44 @@
     isAutoplaying = false;
     window.speechSynthesis.cancel();
     const btn = document.getElementById('autoplay-btn');
-    btn.textContent = '▶ Start Autoplay';
-    btn.classList.remove('playing');
+    btn.classList.remove('is-playing');
+    document.getElementById('autoplay-label').textContent = 'Start Autoplay';
+    document.getElementById('play-icon').innerHTML = `<polygon points="5 3 19 12 5 21 5 3"/>`;
     clearHighlights();
   }
 
   async function runAutoplayLoop() {
     while (isAutoplaying && currentIndex < vocabList.length) {
-      highlightCard(currentIndex);
-      await speakCardLanguages(vocabList[currentIndex]);
+      highlightCard(currentIndex, true);
+      await speakCardLanguages(vocabList[currentIndex], currentIndex);
       if (!isAutoplaying) break;
       currentIndex++;
-      await new Promise(r => setTimeout(r, 500)); // Pause before next card
+      await new Promise(r => setTimeout(r, 420));
     }
     if (isAutoplaying) {
-      stopAutoplay(); // Finished list
+      stopAutoplay();
+      showToast('Finished playing all cards');
     }
   }
 
-  function highlightCard(index) {
+  function highlightCard(index, shouldScroll) {
     clearHighlights();
     const card = document.getElementById(`card-${index}`);
     if (card) {
-      card.classList.add('speaking');
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('is-speaking');
+      if (shouldScroll) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   }
 
   function clearHighlights() {
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('speaking'));
+    document.querySelectorAll('.vocab-card').forEach(c => c.classList.remove('is-speaking'));
+    document.querySelectorAll('.lang-row').forEach(r => r.classList.remove('active-utterance'));
   }
 
   // Initial Render
   renderCards();
 </script>
-
 </body>
 </html>
